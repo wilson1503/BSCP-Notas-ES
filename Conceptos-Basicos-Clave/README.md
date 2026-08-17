@@ -11,6 +11,7 @@ Esta carpeta reúne conceptos que aparecen una y otra vez en Web Security Academ
 5. [Authentication vs Authorization](05-Authentication-vs-Authorization.md)
 6. [URL encoding y double encoding](06-URL-Encoding.md)
 7. [Workflow básico en Burp Suite](07-Workflow-Burp.md)
+8. [Security by Obscurity y rutas expuestas en JavaScript](08-Security-by-Obscurity-y-Rutas-en-JavaScript.md)
 
 ## Qué deberías ser capaz de hacer
 
@@ -24,6 +25,7 @@ Después de leer esta sección deberías poder mirar una request HTTP y responde
 - ¿Qué significa el status code recibido?
 - ¿La aplicación está autenticando al usuario o autorizando una acción?
 - ¿Hay rutas sensibles expuestas en `robots.txt`, JavaScript, sitemap o respuestas HTTP?
+- ¿Una funcionalidad está realmente protegida o solamente oculta mediante *security by obscurity*?
 - ¿El valor está URL encoded una o varias veces?
 
 ## Regla mental
