@@ -6,13 +6,18 @@
 
 | Tema | Estado | Notas |
 |---|---|---|
-| Path Traversal | ⬜ Pendiente | Primer tema |
-| Access Control | ⬜ Pendiente | |
-| Authentication | ⬜ Pendiente | |
+| Path Traversal | ✅ Completado | Lab Apprentice completado |
+| Access Control | ✅ Completado | Todos los labs Apprentice del bloque completados |
+| Authentication | 🟡 En progreso | Siguiente: Username enumeration via different responses |
 | SSRF | ⬜ Pendiente | |
 | File Upload | ⬜ Pendiente | |
 | OS Command Injection | ⬜ Pendiente | |
 | SQL Injection | ⬜ Pendiente | |
+
+## Authentication — labs Apprentice
+
+- [ ] Username enumeration via different responses
+- [ ] 2FA simple bypass
 
 ## Convención
 
@@ -22,6 +27,10 @@
 - 🔁 Repetir / reforzar
 
 ## Registro de estudio
+
+```text
+2026-08-17 | Access Control | — | bloque Apprentice completado | pasar a Authentication
+```
 
 Añadir una línea por sesión:
 
