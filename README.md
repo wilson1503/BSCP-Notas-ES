@@ -17,8 +17,8 @@ Los repositorios de terceros se usan como referencia; estas notas se redactan y 
 
 ### 01 — Server-side vulnerabilities (Apprentice)
 
-- [ ] Path Traversal
-- [ ] Access Control
+- [x] [Path Traversal](01-Server-Side-Vulnerabilities/01-Path-Traversal.md) — primer laboratorio completado
+- [ ] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — siguiente tema
 - [ ] Authentication
 - [ ] SSRF
 - [ ] File Upload Vulnerabilities
