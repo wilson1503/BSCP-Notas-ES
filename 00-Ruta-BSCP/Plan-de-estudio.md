@@ -59,10 +59,10 @@ Si PortSwigger usa una función concreta en la solución del lab, se practica es
 
 Seguir el learning path oficial:
 
-- [ ] Path Traversal
-- [ ] Access Control
-- [ ] Authentication
-- [ ] SSRF
+- [x] Path Traversal
+- [x] Access Control
+- [x] Authentication
+- [ ] SSRF — **en progreso**
 - [ ] File Upload Vulnerabilities
 - [ ] OS Command Injection
 - [ ] SQL Injection
@@ -79,7 +79,7 @@ Una vez consolidados los fundamentos, seguir la progresión recomendada por Port
 
 ## Segunda fase futura — Preparación para examen
 
-Esta fase se mantendrá separada del material didáctico oficial.
+Esta fase se mantiene separada del material didáctico oficial.
 
 Ahí construiremos en español:
 
