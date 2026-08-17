@@ -2,6 +2,15 @@
 
 Esta carpeta reúne conceptos que aparecen una y otra vez en Web Security Academy y en el BSCP. La idea es entenderlos antes de memorizar payloads.
 
+> **Fuente principal:** PortSwigger Web Security Academy y documentación oficial de Burp Suite. Estos archivos sirven para explicar los conceptos en español, no para sustituir el learning path ni los workflows oficiales de los labs.
+
+## Regla para esta carpeta
+
+- Si el concepto aparece en PortSwigger, se explica con el mismo significado técnico.
+- Los ejemplos deben ayudar a comprender el material oficial.
+- Si un lab enseña una función concreta de Burp, el workflow específico del lab tiene prioridad sobre cualquier workflow genérico de esta carpeta.
+- Atajos, automatizaciones y técnicas de velocidad se reservarán para la futura sección **Preparación para el examen**.
+
 ## Orden recomendado
 
 1. [robots.txt y descubrimiento de rutas](01-Robots-txt-y-Descubrimiento-de-Rutas.md)
@@ -27,14 +36,16 @@ Después de leer esta sección deberías poder mirar una request HTTP y responde
 - ¿Hay rutas sensibles expuestas en `robots.txt`, JavaScript, sitemap o respuestas HTTP?
 - ¿Una funcionalidad está realmente protegida o solamente oculta mediante *security by obscurity*?
 - ¿El valor está URL encoded una o varias veces?
+- ¿Estoy modificando una **request** o una **response**, y por qué?
 
 ## Regla mental
 
 ```text
-Primero entender la request.
-Después identificar qué controla el usuario.
-Luego cambiar una sola cosa.
-Finalmente comparar la respuesta.
+Primero entender qué está enseñando PortSwigger.
+Después entender la request/response.
+Luego identificar qué controla el usuario.
+Aplicar el workflow del lab.
+Finalmente explicar por qué funcionó.
 ```
 
-Estos conceptos se usan en casi todos los temas: Access Control, Authentication, Path Traversal, SSRF, SQLi, XSS, File Upload, Request Smuggling y otros.
+Estos conceptos se reutilizan en Access Control, Authentication, Path Traversal, SSRF, SQLi, XSS, File Upload, Request Smuggling y otros temas.
