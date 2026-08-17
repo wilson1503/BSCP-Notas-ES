@@ -1,26 +1,22 @@
 # 02 — Access Control
 
-> **Método de estudio:** este archivo sigue primero el orden, conceptos y workflows de **PortSwigger Web Security Academy**. Si existe una solución oficial para un lab, ese procedimiento es el que se estudia primero. Las alternativas se reservarán para la futura sección de preparación para examen.
+> **Método de estudio:** este archivo sigue primero el orden, conceptos y workflows de **PortSwigger Web Security Academy**. Si existe una solución oficial para un lab, ese procedimiento se documenta primero. Los atajos y métodos alternativos quedan separados para la sección de preparación del examen.
 
 ## Qué es Access Control
 
-En una aplicación web, PortSwigger separa tres ideas relacionadas:
+PortSwigger separa tres ideas:
 
-- **Authentication** → confirma que el usuario es quien dice ser.
-- **Session management** → permite identificar qué peticiones HTTP posteriores pertenecen a ese usuario.
-- **Access control / Authorization** → decide si ese usuario tiene permiso para ejecutar una acción o acceder a un recurso.
+- **Authentication** → confirma quién eres.
+- **Session management** → identifica qué requests posteriores pertenecen a esa sesión.
+- **Access control / Authorization** → decide qué recursos y acciones puede usar ese usuario.
 
-Una vulnerabilidad de control de acceso aparece cuando un usuario puede acceder a recursos o realizar acciones que no debería tener permitidas.
+Pregunta central:
 
-La pregunta central es:
-
-> **¿El servidor comprueba correctamente que este usuario está autorizado para esta acción o recurso?**
+> **¿El servidor comprueba que este usuario está autorizado para ESTE recurso o acción?**
 
 ---
 
 # Orden oficial del bloque Apprentice
-
-En el learning path **Server-side vulnerabilities — Apprentice**, PortSwigger presenta Access Control en este orden:
 
 1. What is access control?
 2. Vertical privilege escalation
@@ -31,46 +27,21 @@ En el learning path **Server-side vulnerabilities — Apprentice**, PortSwigger 
 7. Parameter-based access control methods
 8. **Lab: User role controlled by request parameter**
 9. Horizontal privilege escalation
-10. **Lab: User ID controlled by request parameter, with unpredictable user IDs**
+10. **Lab: User ID controlled by request parameter, with unpredictable user IDs** ← **actual**
 11. Horizontal to vertical privilege escalation
 12. **Lab: User ID controlled by request parameter with password disclosure**
-
-Este es el orden que debemos seguir mientras hacemos la ruta Apprentice.
 
 ---
 
 # 1. Vertical privilege escalation
 
-Ocurre cuando un usuario con menos privilegios obtiene acceso a funciones reservadas para un rol superior.
-
-Ejemplo:
+Un usuario de menor privilegio consigue acceder a funcionalidad reservada para un rol superior.
 
 ```text
 usuario normal → función de administrador
 ```
 
-Un caso típico es un panel administrativo que existe en una URL como:
-
-```text
-/admin
-/administrator-panel
-```
-
-Ocultar el enlace de la interfaz **no protege el endpoint**. La autorización debe ser aplicada por el servidor.
-
----
-
-# 2. Unprotected functionality
-
-Una aplicación puede tener funciones sensibles que no están realmente protegidas. El usuario no ve el enlace, pero puede navegar directamente a la URL si consigue descubrirla.
-
-PortSwigger enseña que una ruta administrativa puede filtrarse, por ejemplo, mediante:
-
-```text
-/robots.txt
-```
-
-## Lab oficial 1 — Unprotected admin functionality
+## Lab 1 — Unprotected admin functionality ✅
 
 ### Objetivo
 
@@ -79,90 +50,68 @@ Encontrar el panel administrativo y eliminar a `carlos`.
 ### Workflow oficial
 
 1. Abrir el lab.
-2. Añadir `/robots.txt` al dominio.
-3. Revisar la línea `Disallow`.
-4. Observar que revela la ruta del panel, por ejemplo:
+2. Visitar:
 
 ```text
-Disallow: /administrator-panel
+/robots.txt
 ```
 
-5. Sustituir `/robots.txt` por `/administrator-panel` en la barra del navegador.
-6. Abrir el panel.
-7. Eliminar a `carlos`.
-
-### Qué estaba enseñando PortSwigger
-
-`robots.txt` puede revelar una ruta, pero **no es un mecanismo de autorización**.
+3. Revisar `Disallow`.
+4. Encontrar una ruta como:
 
 ```text
-robots.txt
-    ↓
-revela /administrator-panel
-    ↓
-acceso directo funciona
-    ↓
-servidor no exige rol admin
-    ↓
-vertical privilege escalation
+/administrator-panel
+```
+
+5. Abrir esa ruta directamente.
+6. Eliminar a `carlos`.
+
+### Lección
+
+```text
+robots.txt revela una ruta
+≠
+robots.txt protege una ruta
 ```
 
 ---
 
-# 3. Unprotected functionality — unpredictable URL
+# 2. Unprotected functionality — unpredictable URL
 
-Una aplicación puede intentar ocultar una función administrativa usando una URL difícil de adivinar:
+Una URL difícil de adivinar tampoco constituye control de acceso.
 
 ```text
 /administrator-panel-yb556
 ```
 
-Esto es un ejemplo de **security by obscurity**.
+Puede filtrarse en HTML o JavaScript enviado al navegador.
 
-La URL puede seguir siendo enviada al navegador dentro del HTML o JavaScript, aunque la interfaz no muestre el enlace al usuario normal.
-
-Ejemplo conceptual:
-
-```javascript
-var isAdmin = false;
-if (isAdmin) {
-    var adminPanelTag = document.createElement('a');
-    adminPanelTag.setAttribute('href', '/administrator-panel-yb556');
-}
-```
-
-El navegador recibe ese JavaScript, por lo que el usuario puede inspeccionarlo.
-
-## Lab oficial 2 — Unprotected admin functionality with unpredictable URL
+## Lab 2 — Unprotected admin functionality with unpredictable URL ✅
 
 ### Workflow oficial
 
-1. Revisar el **source** de la página principal usando Burp Suite o las herramientas de desarrollo del navegador.
-2. Encontrar JavaScript que revele la URL del panel administrativo.
-3. Cargar esa URL.
+1. Revisar el source/JavaScript de la página.
+2. Encontrar la URL administrativa embebida en el script.
+3. Abrirla.
 4. Eliminar a `carlos`.
 
-### Regla para recordar
+### Lección
 
 ```text
-Difícil de adivinar ≠ protegido
+Security by Obscurity ≠ Authorization
 ```
-
-La seguridad no debe depender únicamente de que una URL sea secreta.
 
 ---
 
-# 4. Parameter-based access control methods
+# 3. Parameter-based access control methods
 
-PortSwigger explica que algunas aplicaciones determinan el rol al iniciar sesión y almacenan esa información en una ubicación **controlable por el usuario**.
+Una aplicación puede confiar en información controlable por el cliente para decidir el rol:
 
-Puede ser:
+- hidden field;
+- cookie;
+- query parameter.
 
-- un **hidden field**;
-- una **cookie**;
-- un **preset query string parameter**.
-
-Ejemplos conceptuales:
+Ejemplos:
 
 ```text
 ?admin=true
@@ -173,104 +122,63 @@ Ejemplos conceptuales:
 Cookie: Admin=true
 ```
 
-El problema aparece cuando el servidor confía en ese valor para tomar decisiones de autorización.
+## Lab 3 — User role controlled by request parameter ✅
 
-## Lab oficial 3 — User role controlled by request parameter
-
-### Datos proporcionados por el lab
+Credenciales proporcionadas:
 
 ```text
 wiener:peter
 ```
 
-Panel administrativo:
+Panel:
 
 ```text
 /admin
 ```
-
-Objetivo: acceder al panel y eliminar a `carlos`.
 
 ### Workflow oficial de PortSwigger
 
-Este laboratorio es importante porque enseña específicamente **response interception en Burp Proxy**.
+Este lab enseña específicamente **response interception**.
 
-1. Navegar a:
-
-```text
-/admin
-```
-
-2. Comprobar que no tenemos acceso.
-3. Abrir la página de login.
-4. En **Burp Proxy**, activar la interceptación.
-5. Activar también **response interception**.
-6. Completar y enviar el login con:
-
-```text
-wiener:peter
-```
-
-7. Hacer **Forward** de la request de login.
-8. Interceptar la **response** del servidor.
-9. Observar:
+1. Visitar `/admin` y comprobar que no tenemos acceso.
+2. Ir al login.
+3. En **Burp → Proxy**, activar interception.
+4. Activar también **response interception**.
+5. Enviar el login con `wiener:peter`.
+6. Hacer Forward de la request.
+7. Interceptar la response.
+8. Encontrar:
 
 ```http
 Set-Cookie: Admin=false
 ```
 
-10. Modificar la response antes de que llegue al navegador:
+9. Modificarla a:
 
 ```http
 Set-Cookie: Admin=true
 ```
 
-11. Hacer **Forward**.
-12. El navegador almacena ahora la cookie modificada.
-13. Cargar `/admin` normalmente.
-14. Eliminar a `carlos`.
-
-### Qué debemos aprender de este lab
-
-No basta con recordar `Admin=false → Admin=true`.
-
-El flujo importante es:
-
-```text
-POST /login
-     ↓
-Response del servidor
-     ↓
-Set-Cookie: Admin=false
-     ↓
-Burp Proxy intercepta RESPONSE
-     ↓
-Admin=true
-     ↓
-Browser almacena la cookie
-     ↓
-GET /admin
-```
+10. Forward.
+11. El navegador guarda `Admin=true`.
+12. Abrir `/admin`.
+13. Eliminar a `carlos`.
 
 ### Request vs Response interception
 
 ```text
-Request interception
-Browser ──[request]──> Burp ──> Server
+REQUEST
+Browser ──> Burp ──> Server
 
-Response interception
-Browser <── Burp <──[response]── Server
+RESPONSE
+Browser <── Burp <── Server
 ```
-
-En este laboratorio, PortSwigger quiere que practiquemos **la segunda**.
-
-> Una alternativa mediante Repeater puede demostrar la misma vulnerabilidad, pero no sustituye el workflow oficial de estudio de este lab.
 
 ---
 
-# 5. Horizontal privilege escalation
+# 4. Horizontal privilege escalation
 
-Ocurre cuando un usuario puede acceder a recursos de **otro usuario que tiene un nivel de privilegios equivalente**.
+Ocurre cuando un usuario accede a recursos pertenecientes a **otro usuario del mismo nivel de privilegios**.
 
 Ejemplo conceptual:
 
@@ -290,129 +198,234 @@ por:
 id=124
 ```
 
-puede permitir acceder a otro recurso si el servidor no comprueba que el objeto pertenece al usuario autenticado.
+puede permitir acceder a otro usuario si el servidor no comprueba la propiedad del recurso.
 
-Los identificadores pueden ser:
+Los identificadores pueden ser números, usernames, emails o GUID/UUID.
 
-```text
-1
-1234
-carlos
-usuario@email.com
-UUID
-```
-
-Un identificador impredecible puede dificultar descubrir otro objeto, pero **no reemplaza el control de acceso**.
-
-## Siguiente lab oficial
-
-**User ID controlled by request parameter, with unpredictable user IDs**
-
-Cuando lleguemos a este lab, documentaremos el procedimiento exacto de PortSwigger después de estudiarlo y resolverlo.
+Un GUID difícil de adivinar **no sustituye la autorización** si la aplicación lo revela en otro lugar.
 
 ---
 
-# 6. Horizontal to vertical privilege escalation
+# Lab 4 — User ID controlled by request parameter, with unpredictable user IDs ⏳
 
-Una vulnerabilidad horizontal puede terminar produciendo una escalación vertical.
+> **Guía detallada:** [abrir procedimiento completo paso a paso](../Labs/Access-Control/04-User-ID-controlled-by-request-parameter-unpredictable-GUIDs.md)
 
-Ejemplo conceptual:
+## Objetivo
 
 ```text
-acceso a datos de otro usuario
-        ↓
-el otro usuario tiene privilegios mayores
-        ↓
-obtengo información sensible o control de su cuenta
-        ↓
-escalación vertical
+Encontrar GUID de carlos
+→ acceder a su cuenta
+→ obtener su API key
+→ Submit solution
 ```
 
-## Lab Apprentice posterior
+Credenciales:
+
+```text
+wiener:peter
+```
+
+## Workflow oficial de PortSwigger
+
+### Paso 1 — Encontrar el GUID de `carlos`
+
+1. Navegar por los blog posts.
+2. Encontrar una publicación escrita por `carlos`.
+3. Hacer clic sobre el nombre `carlos`.
+4. Observar que la URL contiene su user ID/GUID.
+5. Copiar el GUID.
+
+```text
+blog post
+→ carlos
+→ URL contiene GUID
+→ guardar GUID
+```
+
+### Paso 2 — Login
+
+Entrar a **My account** con:
+
+```text
+wiener:peter
+```
+
+### Paso 3 — Identificar el parámetro
+
+La cuenta propia utiliza una URL similar a:
+
+```text
+/my-account?id=GUID_DE_WIENER
+```
+
+### Paso 4 — Cambiar solamente `id`
+
+Sustituir:
+
+```text
+id=GUID_DE_WIENER
+```
+
+por:
+
+```text
+id=GUID_DE_CARLOS
+```
+
+### Paso 5 — Obtener API key
+
+Si el control de acceso falla, la aplicación mostrará la cuenta de `carlos`.
+
+Copiar su API key.
+
+### Paso 6 — Submit solution
+
+Enviar la API key de `carlos` mediante **Submit solution**.
+
+---
+
+## Qué usar de Burp en este lab
+
+El workflow oficial se puede completar desde el navegador, pero mientras lo hacemos debemos practicar Burp para aprender a leer las requests.
+
+### Proxy → HTTP history
+
+Mantener abierto:
+
+```text
+Proxy
+→ HTTP history
+```
+
+Cuando abrimos nuestra cuenta debemos localizar algo parecido a:
+
+```http
+GET /my-account?id=GUID_DE_WIENER HTTP/2
+```
+
+Debemos poder identificar:
+
+```text
+Endpoint = /my-account
+Parámetro = id
+Valor = GUID_DE_WIENER
+```
+
+### Repeater — práctica complementaria
+
+> Esto es **opcional para aprender Burp** y no sustituye el método oficial.
+
+1. Clic derecho sobre `GET /my-account?id=...`.
+2. **Send to Repeater**.
+3. Ir a **Repeater**.
+4. Cambiar solo el valor de `id` por el GUID de `carlos`.
+5. **Send**.
+6. Revisar la Response y buscar:
+
+```text
+carlos
+API key
+```
+
+---
+
+## Qué está enseñando este lab
+
+```text
+GUID impredecible
+      ↓
+no puedo adivinarlo fácilmente
+      ↓
+pero la app lo expone en los blog posts
+      ↓
+obtengo GUID de carlos
+      ↓
+lo uso en /my-account?id=
+      ↓
+servidor no comprueba ownership
+      ↓
+Horizontal Privilege Escalation
+```
+
+### Relación con IDOR
+
+Este patrón es un ejemplo típico relacionado con **IDOR**: una referencia controlada por el usuario permite acceder directamente a otro objeto sin autorización adecuada.
+
+El fallo real no es que exista un GUID.
+
+El fallo es:
+
+```text
+usuario autenticado = wiener
+objeto solicitado    = cuenta de carlos
+servidor             = la devuelve igualmente
+```
+
+---
+
+# 5. Horizontal → vertical privilege escalation
+
+Una escalación horizontal puede terminar comprometiendo un usuario de mayor privilegio.
+
+```text
+acceso a cuenta ajena
+        ↓
+cuenta privilegiada
+        ↓
+dato sensible / contraseña / función
+        ↓
+vertical privilege escalation
+```
+
+## Próximo lab
 
 **User ID controlled by request parameter with password disclosure**
 
-Se documentará usando el workflow oficial cuando lleguemos a él.
+Cuando lo abramos, añadiremos **antes de resolverlo**:
+
+- objetivo exacto;
+- procedimiento oficial de PortSwigger;
+- clics en Burp necesarios;
+- request/response que debemos reconocer;
+- qué resultado esperamos;
+- por qué funciona.
 
 ---
 
-# Temas de Access Control que veremos más adelante
+# Regla nueva para TODOS los labs
 
-PortSwigger también cubre técnicas adicionales fuera de este primer bloque Apprentice, entre ellas:
+A partir de este punto, ningún lab se deja solamente con teoría.
 
-- IDOR;
-- platform misconfiguration;
-- URL-based access controls;
-- `X-Original-URL` y routing;
-- controles dependientes del método HTTP;
-- discrepancias en URL matching;
-- procesos de varios pasos;
-- controles basados en `Referer`;
-- controles basados en ubicación.
-
-No adelantaremos sus workflows como si fueran parte del lab actual. Se añadirán siguiendo el orden del material oficial cuando corresponda.
-
----
-
-# Workflow general de análisis
-
-Este workflow sirve como orientación, pero **el procedimiento específico de cada lab tiene prioridad**.
+Cada laboratorio debe tener en GitHub:
 
 ```text
-1. Entender qué función/recurso debería estar restringido.
-2. Navegar normalmente y observar el comportamiento.
-3. Revisar requests y responses en Burp.
-4. Identificar qué dato utiliza la aplicación para tomar la decisión.
-5. Seguir la técnica indicada por el concepto/lab.
-6. Comparar el comportamiento autorizado y no autorizado.
-7. Entender por qué el servidor permitió la acción.
+1. Objetivo
+2. Datos que proporciona PortSwigger
+3. Procedimiento oficial paso a paso
+4. Qué botones/pestañas usar en Burp
+5. Request o response importante
+6. Qué valor modificar
+7. Resultado esperado
+8. Explicación de por qué funciona
+9. Checklist de lo que tengo que aprender
 ```
 
-## Qué mirar en una request/response
-
-- URL y endpoint;
-- método HTTP;
-- parámetros;
-- cookies;
-- headers;
-- body;
-- status code;
-- redirects;
-- contenido del response;
-- información enviada por JavaScript.
+Si el lab oficial **no necesita Burp**, se indicará claramente y añadiremos una práctica complementaria de Burp solo cuando ayude a aprender la herramienta sin reemplazar el workflow oficial.
 
 ---
 
-# Método mental
+# Qué debo dominar en Burp durante Access Control
 
-```text
-¿Quién soy?
-      ↓
-¿Qué recurso o acción intento usar?
-      ↓
-¿Debería tener permiso?
-      ↓
-¿Qué usa la aplicación para decidirlo?
-      ↓
-¿Ese dato puede ser manipulado o el control está ausente?
-      ↓
-¿El servidor vuelve a validar la autorización?
-```
-
----
-
-# Checklist Apprentice
-
-- [x] Entiendo qué es vertical privilege escalation.
-- [x] Entiendo por qué ocultar `/admin` no protege el endpoint.
-- [x] Entiendo qué revela `robots.txt` y qué NO hace.
-- [x] Entiendo Security by Obscurity.
-- [x] Sé que una ruta puede filtrarse mediante JavaScript.
-- [x] Entiendo los parameter-based access control methods.
-- [ ] Sé usar **response interception** en Burp Proxy con soltura.
-- [ ] Entiendo horizontal privilege escalation.
-- [ ] Sé trabajar con identificadores impredecibles.
-- [ ] Entiendo horizontal → vertical privilege escalation.
+- [ ] Proxy → Intercept.
+- [ ] Request interception.
+- [ ] Response interception.
+- [ ] Proxy → HTTP history.
+- [ ] Leer método, endpoint y query parameters.
+- [ ] Identificar cookies.
+- [ ] Send to Repeater.
+- [ ] Modificar un parámetro en Repeater.
+- [ ] Comparar Request y Response.
+- [ ] Entender cuándo PortSwigger pide Burp y cuándo el navegador es suficiente.
 
 ---
 
@@ -421,23 +434,29 @@ Este workflow sirve como orientación, pero **el procedimiento específico de ca
 ## Lab 1 — Unprotected admin functionality
 
 - Estado: ✅ resuelto.
-- Concepto clave: ruta administrativa expuesta mediante `robots.txt`.
-- Método: solución oficial de PortSwigger.
+- Concepto: función admin sin protección / `robots.txt`.
 
 ## Lab 2 — Unprotected admin functionality with unpredictable URL
 
 - Estado: ✅ resuelto.
-- Concepto clave: URL administrativa filtrada mediante JavaScript / Security by Obscurity.
-- Método: solución oficial de PortSwigger.
+- Concepto: Security by Obscurity / ruta filtrada en JavaScript.
 
 ## Lab 3 — User role controlled by request parameter
 
-- Concepto clave: cookie de rol manipulable.
-- Técnica que debe dominarse: **Burp Proxy response interception**.
-- Método de estudio: modificar `Set-Cookie: Admin=false` a `Admin=true` en la response antes de que llegue al navegador.
+- Estado: ✅ resuelto.
+- Concepto: cookie de rol manipulable.
+- Técnica Burp: **response interception**.
+
+## Lab 4 — User ID controlled by request parameter, with unpredictable user IDs
+
+- Estado: ⏳ en progreso.
+- Concepto: horizontal privilege escalation con GUID filtrado en otra funcionalidad.
+- Parámetro clave: `id`.
+- Objetivo final: API key de `carlos`.
+- [Procedimiento completo](../Labs/Access-Control/04-User-ID-controlled-by-request-parameter-unpredictable-GUIDs.md)
 
 ---
 
 # Regla rápida
 
-**No basta con conseguir `Solved`: tengo que poder reproducir y explicar la técnica que PortSwigger estaba enseñando.**
+**No basta con conseguir `Solved`: tengo que saber qué request/response estaba usando, dónde estaba el dato controlable y cómo reproducir el workflow que PortSwigger estaba enseñando.**
