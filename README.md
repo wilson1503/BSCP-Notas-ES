@@ -24,10 +24,10 @@ Durante la fase de aprendizaje:
 - se conserva la terminología técnica que usa PortSwigger;
 - si un laboratorio tiene una técnica o workflow concreto en su solución oficial, esa técnica se documenta **primero y como método de estudio principal**;
 - una técnica alternativa que también resuelva el lab no sustituye al procedimiento que PortSwigger intenta enseñar;
-- los workflows alternativos, automatizaciones, payload collections, scripts y atajos se separarán posteriormente en una sección de **Preparación para el examen**;
+- los workflows alternativos, automatizaciones, payload collections, scripts y atajos se mantienen separados en **Preparación para el examen**;
 - si existe una discrepancia entre estas notas y PortSwigger, **PortSwigger gana**.
 
-Los repositorios comunitarios como DCKento, DingyShark, ifrane, D4mianWayne y secure-the-code quedan como referencias secundarias. Se usarán principalmente más adelante para crear material de repaso y agilidad para el examen, nunca para reemplazar el aprendizaje oficial.
+Los repositorios comunitarios se usan como referencias secundarias para crear material de repaso y agilidad, nunca para reemplazar el aprendizaje oficial.
 
 ## Dos fases distintas
 
@@ -51,19 +51,23 @@ Aquí importa aprender también **qué herramienta de Burp usa el lab**: Proxy, 
 
 ### Fase 2 — Preparación específica para el examen
 
-Se construirá más adelante y de forma separada. Incluirá, entre otras cosas:
+Ya existe una sección separada que se irá refinando mientras avanzamos. Recopila:
 
+- reglas oficiales actuales del examen;
 - cheat sheets en español;
+- prioridades comunitarias por etapa;
 - payloads organizados por contexto;
 - checklists de reconocimiento;
 - comandos y snippets útiles;
 - workflows rápidos en Burp;
-- consejos de otros candidatos y repositorios comunitarios, contrastados con PortSwigger;
-- Mystery Labs;
-- Practice Exam;
-- gestión del tiempo y metodología de enumeración.
+- targeted scanning;
+- encoding/bypasses;
+- metodología de enumeración;
+- fuentes de DCKento, DingyShark, n3oari, botesjuan, nazori y zeeshan811.
 
-La finalidad será **ganar velocidad sin confundir los atajos del examen con el material usado para aprender cada vulnerabilidad**.
+➡️ [Abrir Preparación para el examen](Preparacion-Examen/README.md)
+
+La finalidad es **ganar velocidad sin confundir los atajos del examen con el material usado para aprender cada vulnerabilidad**.
 
 ## Ruta actual
 
@@ -92,9 +96,7 @@ Incluye `robots.txt`, descubrimiento de rutas, endpoints, parámetros, métodos 
 - [`00-Ruta-BSCP/`](00-Ruta-BSCP/) — plan, progreso y metodología.
 - [`Conceptos-Basicos-Clave/`](Conceptos-Basicos-Clave/) — fundamentos web reutilizables.
 - [`01-Server-Side-Vulnerabilities/`](01-Server-Side-Vulnerabilities/) — primer learning path.
-- [`Labs/`](Labs/) — notas de laboratorios realizados.
-- [`CheatSheets/`](CheatSheets/) — reservado para la fase de repaso/examen.
-- [`Payloads/`](Payloads/) — reservado para payloads explicados y posteriormente material de agilidad.
+- [`Preparacion-Examen/`](Preparacion-Examen/) — material de velocidad, priorización y repaso para usar después de aprender los temas.
 - [`Templates/`](Templates/) — plantillas de estudio.
 - [`Referencias/`](Referencias/) — fuentes oficiales y comunitarias.
 
