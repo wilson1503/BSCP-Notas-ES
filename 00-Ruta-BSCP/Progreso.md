@@ -8,16 +8,21 @@
 |---|---|---|
 | Path Traversal | ✅ Completado | Lab Apprentice completado |
 | Access Control | ✅ Completado | Todos los labs Apprentice del bloque completados |
-| Authentication | 🟡 En progreso | Siguiente: Username enumeration via different responses |
-| SSRF | ⬜ Pendiente | |
+| Authentication | ✅ Completado | 2 labs Apprentice completados |
+| SSRF | 🟡 En progreso | Siguiente: Basic SSRF against the local server |
 | File Upload | ⬜ Pendiente | |
 | OS Command Injection | ⬜ Pendiente | |
 | SQL Injection | ⬜ Pendiente | |
 
 ## Authentication — labs Apprentice
 
-- [ ] Username enumeration via different responses
-- [ ] 2FA simple bypass
+- [x] Username enumeration via different responses
+- [x] 2FA simple bypass
+
+## SSRF — labs Apprentice
+
+- [ ] Basic SSRF against the local server
+- [ ] Basic SSRF against another back-end system
 
 ## Convención
 
@@ -30,6 +35,7 @@
 
 ```text
 2026-08-17 | Access Control | — | bloque Apprentice completado | pasar a Authentication
+2026-08-17 | Authentication | — | 2 labs Apprentice completados | pasar a SSRF
 ```
 
 Añadir una línea por sesión:
