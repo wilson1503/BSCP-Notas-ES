@@ -22,6 +22,7 @@ Esta carpeta reúne conceptos que aparecen una y otra vez en Web Security Academ
 7. [Workflow básico en Burp Suite](07-Workflow-Burp.md)
 8. [Security by Obscurity y rutas expuestas en JavaScript](08-Security-by-Obscurity-y-Rutas-en-JavaScript.md)
 9. [Burp Intruder — conceptos básicos](09-Burp-Intruder-Basico.md)
+10. [SSRF: loopback, localhost y redes internas](10-SSRF-Loopback-y-Redes-Internas.md)
 
 ## Qué deberías ser capaz de hacer
 
@@ -39,6 +40,8 @@ Después de leer esta sección deberías poder mirar una request HTTP y responde
 - ¿El valor está URL encoded una o varias veces?
 - ¿Estoy modificando una **request** o una **response**, y por qué?
 - ¿Sé cuándo conviene automatizar una prueba con **Intruder** y qué diferencia de respuesta estoy buscando?
+- ¿Entiendo la diferencia entre mi `localhost` y el `localhost` del servidor remoto?
+- ¿Puedo reconocer una URL que apunta a una red interna y separar protocolo, host, puerto y path?
 
 ## Regla mental
 
