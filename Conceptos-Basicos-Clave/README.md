@@ -9,7 +9,7 @@ Esta carpeta reúne conceptos que aparecen una y otra vez en Web Security Academ
 - Si el concepto aparece en PortSwigger, se explica con el mismo significado técnico.
 - Los ejemplos deben ayudar a comprender el material oficial.
 - Si un lab enseña una función concreta de Burp, el workflow específico del lab tiene prioridad sobre cualquier workflow genérico de esta carpeta.
-- Atajos, automatizaciones y técnicas de velocidad se reservarán para la futura sección **Preparación para el examen**.
+- Atajos, automatizaciones y técnicas de velocidad se reservan para **Preparación para el examen**.
 
 ## Orden recomendado
 
@@ -21,6 +21,7 @@ Esta carpeta reúne conceptos que aparecen una y otra vez en Web Security Academ
 6. [URL encoding y double encoding](06-URL-Encoding.md)
 7. [Workflow básico en Burp Suite](07-Workflow-Burp.md)
 8. [Security by Obscurity y rutas expuestas en JavaScript](08-Security-by-Obscurity-y-Rutas-en-JavaScript.md)
+9. [Burp Intruder — conceptos básicos](09-Burp-Intruder-Basico.md)
 
 ## Qué deberías ser capaz de hacer
 
@@ -37,6 +38,7 @@ Después de leer esta sección deberías poder mirar una request HTTP y responde
 - ¿Una funcionalidad está realmente protegida o solamente oculta mediante *security by obscurity*?
 - ¿El valor está URL encoded una o varias veces?
 - ¿Estoy modificando una **request** o una **response**, y por qué?
+- ¿Sé cuándo conviene automatizar una prueba con **Intruder** y qué diferencia de respuesta estoy buscando?
 
 ## Regla mental
 
