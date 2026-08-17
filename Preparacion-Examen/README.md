@@ -4,9 +4,9 @@
 
 ## Objetivo
 
-Concentrar en español lo más útil de varias guías comunitarias de preparación para BSCP, manteniendo separado este material de las notas oficiales de estudio.
+Concentrar en español lo más útil de las guías oficiales de examen y de varias guías comunitarias de preparación para BSCP, manteniendo separado este material de las notas de aprendizaje por tema.
 
-La estructura se basa en una idea que se repite en varias guías comunitarias: pensar cada aplicación del examen como una cadena de objetivos y priorizar las vulnerabilidades que razonablemente pueden llevar al objetivo de cada fase.
+La estructura se basa en una idea que coincide con la guía oficial actual de PortSwigger y que también se repite en las guías comunitarias: pensar cada aplicación como una cadena de **tres objetivos ordenados** y priorizar las vulnerabilidades que realmente pueden llevar al objetivo de la fase actual.
 
 ## Regla principal
 
@@ -15,13 +15,14 @@ APRENDER
 PortSwigger → teoría → labs → workflow oficial
 
 OPTIMIZAR
-Preparación-Examen → reconocimiento rápido → priorización → payloads → checklists
+Preparación-Examen → reglas oficiales → reconocimiento rápido → priorización → payloads → checklists
 ```
 
 Si algo de esta carpeta contradice a PortSwigger, **PortSwigger gana**.
 
 ## Índice
 
+0. [Guía oficial actual de PortSwigger](00-Guia-Oficial-PortSwigger.md)
 1. [Estrategia por etapas](01-Estrategia-por-Etapas.md)
 2. [Matriz comunitaria de prioridad](02-Matriz-Prioridad-Comunitaria.md)
 3. [Reconocimiento y enumeración](03-Reconocimiento-y-Enumeracion.md)
@@ -39,7 +40,8 @@ Si algo de esta carpeta contradice a PortSwigger, **PortSwigger gana**.
 
 ## Qué se recopila aquí
 
-- prioridades por etapa;
+- reglas oficiales actuales del examen;
+- prioridades comunitarias por etapa;
 - señales que permiten reconocer una vulnerabilidad rápidamente;
 - endpoints, parámetros y estructuras que conviene revisar;
 - payloads pequeños y reutilizables;
@@ -55,8 +57,11 @@ Si algo de esta carpeta contradice a PortSwigger, **PortSwigger gana**.
 - sustituir la Web Security Academy;
 - tratar una matriz comunitaria como si fuera una garantía sobre el examen;
 - guardar cientos de payloads sin contexto;
-- memorizar atajos antes de entender la vulnerabilidad.
+- memorizar atajos antes de entender la vulnerabilidad;
+- recopilar supuestas filtraciones del examen o material que dependa de romper NDA.
 
 ## Estado
 
 Esta sección está **preparada para uso futuro**. Se seguirá enriqueciendo a medida que se estudien los temas, pero no hace falta leerla durante la fase inicial de aprendizaje.
+
+Antes del examen real se deberá volver a revisar la documentación oficial porque el formato, requisitos y recomendaciones pueden cambiar.
