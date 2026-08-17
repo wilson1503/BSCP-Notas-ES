@@ -2,6 +2,17 @@
 
 > **Método de estudio:** seguir primero el orden y los workflows oficiales de PortSwigger Web Security Academy. Los atajos para examen quedan separados en `Preparacion-Examen/`.
 
+## Estado del bloque
+
+**✅ Authentication — Apprentice completado.**
+
+Labs realizados:
+
+- ✅ Username enumeration via different responses.
+- ✅ 2FA simple bypass.
+
+---
+
 ## Qué es Authentication
 
 **Authentication** verifica que un usuario es quien afirma ser. No es lo mismo que **Authorization / Access Control**, que decide qué puede hacer un usuario una vez autenticado.
@@ -18,7 +29,7 @@ Una vulnerabilidad de autenticación puede permitir acceder a una cuenta sin con
 
 # Orden oficial en Server-side vulnerabilities — Apprentice
 
-El bloque Authentication de este learning path contiene actualmente 10 elementos:
+El bloque Authentication contiene 10 elementos:
 
 1. Authentication vulnerabilities
 2. What is the difference between authentication and authorization?
@@ -31,15 +42,13 @@ El bloque Authentication de este learning path contiene actualmente 10 elementos
 9. Bypassing two-factor authentication
 10. **Lab: 2FA simple bypass**
 
-En este bloque Apprentice haremos **2 labs**.
-
 ---
 
 # 1. Brute-force attacks
 
 Un brute-force attack consiste en probar repetidamente valores hasta encontrar credenciales válidas.
 
-PortSwigger remarca que no siempre se trata de probar todas las combinaciones posibles. Las wordlists y los patrones humanos reducen mucho el espacio de búsqueda.
+No siempre significa probar todas las combinaciones posibles. Las wordlists y patrones humanos reducen mucho el espacio de búsqueda.
 
 ## Qué observar en un login
 
@@ -63,9 +72,7 @@ usuario inexistente → Invalid username
 usuario existente   → Incorrect password
 ```
 
-La aplicación acaba revelando que el segundo username sí existe.
-
-Diferencias que PortSwigger recomienda observar:
+Las diferencias pueden aparecer en:
 
 ```text
 status code
@@ -76,89 +83,75 @@ response timing
 
 ---
 
-# Lab 1 — Username enumeration via different responses ⏳
+# Lab 1 — Username enumeration via different responses ✅
 
 > [Procedimiento completo paso a paso](../Labs/Authentication/01-Username-enumeration-via-different-responses.md)
 
-## Qué enseña
-
-Dos fases separadas:
+## Workflow aprendido
 
 ```text
-1. Enumerar username válido
-2. Fijar ese username y brute-forcear password
+POST /login
+    ↓
+Send to Intruder
+    ↓
+username=§payload§
+    ↓
+Simple list de usernames
+    ↓
+comparar Length / mensaje
+    ↓
+username válido
+    ↓
+username fijo + password=§payload§
+    ↓
+Simple list de passwords
+    ↓
+buscar Status 302
+    ↓
+login correcto
 ```
 
-La herramienta principal es **Burp Intruder**.
+## Qué aprendimos de Burp
 
-El indicador del username válido es la diferencia entre respuestas como:
-
-```text
-Invalid username
-```
-
-y:
-
-```text
-Incorrect password
-```
-
-Después, al probar passwords sobre el username válido, una respuesta `302` indica el login exitoso mientras los intentos fallidos responden normalmente `200`.
+- `Send to Intruder`;
+- payload positions `§...§`;
+- `Clear §` / `Add §`;
+- attack type **Sniper**;
+- payload type **Simple list**;
+- ordenar resultados por `Length` y `Status`;
+- comparar respuestas.
 
 ---
 
 # 3. Two-factor authentication / 2FA
 
-2FA pretende requerir dos factores distintos. Un error frecuente de implementación es validar el segundo factor en una página concreta, pero considerar al usuario autenticado después de haber introducido correctamente username/password.
+2FA pretende requerir dos factores distintos.
 
-Si la aplicación permite navegar directamente a una página autenticada sin haber completado el segundo factor, existe un **2FA bypass**.
+Un fallo aparece cuando la aplicación valida el segundo factor en una pantalla concreta, pero los recursos protegidos no comprueban que el proceso completo haya terminado.
 
 ---
 
-# Lab 2 — 2FA simple bypass
+# Lab 2 — 2FA simple bypass ✅
 
 > [Procedimiento completo paso a paso](../Labs/Authentication/02-2FA-simple-bypass.md)
 
-## Qué enseña
-
-El flujo vulnerable es conceptualmente:
+## Workflow aprendido
 
 ```text
 username + password correctos
         ↓
-servidor crea estado autenticado
+servidor crea estado parcialmente autenticado
         ↓
-/ login2 pide 2FA
+/login2 pide código 2FA
         ↓
-pero /my-account no comprueba que 2FA terminó
+/my-account no comprueba que 2FA terminó
         ↓
 forced browsing a /my-account
         ↓
 2FA bypass
 ```
 
-PortSwigger resuelve este lab navegando directamente a `/my-account` mientras estamos en la pantalla del código 2FA de `carlos`.
-
----
-
-# Burp que debemos aprender en Authentication
-
-Este bloque es especialmente importante porque introduce **Intruder** de forma práctica.
-
-Debemos dominar:
-
-- `Proxy → HTTP history`;
-- localizar `POST /login`;
-- `Send to Intruder`;
-- payload positions `§...§`;
-- `Clear §` y `Add §`;
-- attack type **Sniper**;
-- payload type **Simple list**;
-- pegar una wordlist;
-- `Start attack`;
-- ordenar por `Length`;
-- revisar `Status`;
-- abrir y comparar Responses.
+La lección principal es que **cada recurso protegido debe verificar que el proceso de autenticación completo se haya satisfecho**.
 
 ---
 
@@ -183,25 +176,25 @@ Para MFA:
 ```text
 ¿cada recurso protegido verifica que TODOS los factores se completaron?
         ↓
-¿o solo la página del código 2FA hace esa comprobación?
+¿o solamente la pantalla de 2FA lo comprueba?
 ```
 
 ---
 
 # Checklist Apprentice
 
-- [ ] Entiendo Authentication vs Authorization.
-- [ ] Entiendo qué es brute force.
-- [ ] Entiendo username enumeration.
-- [ ] Sé reconocer diferencias por mensaje, length, status y timing.
-- [ ] Sé enviar `POST /login` a Intruder.
-- [ ] Sé usar payload positions.
-- [ ] Sé usar Sniper + Simple list.
-- [ ] Sé interpretar un ataque de Intruder.
-- [ ] Entiendo por qué se enumera primero el username.
-- [ ] Entiendo qué es un 2FA bypass por forced browsing.
-- [ ] Lab 1 completado.
-- [ ] Lab 2 completado.
+- [x] Entiendo Authentication vs Authorization.
+- [x] Entiendo qué es brute force.
+- [x] Entiendo username enumeration.
+- [x] Sé reconocer diferencias por mensaje, length, status y timing.
+- [x] Sé enviar `POST /login` a Intruder.
+- [x] Sé usar payload positions.
+- [x] Sé usar Sniper + Simple list.
+- [x] Sé interpretar un ataque de Intruder.
+- [x] Entiendo por qué se enumera primero el username.
+- [x] Entiendo qué es un 2FA bypass por forced browsing.
+- [x] Lab 1 completado.
+- [x] Lab 2 completado.
 
 ---
 
@@ -209,15 +202,15 @@ Para MFA:
 
 ## Lab 1 — Username enumeration via different responses
 
-- Estado: ⏳ siguiente lab.
+- Estado: ✅ resuelto.
 - Herramienta principal: **Burp Intruder**.
-- Objetivo: encontrar un username válido, encontrar su password y entrar a su cuenta.
+- Concepto: username enumeration + brute force de password.
 
 ## Lab 2 — 2FA simple bypass
 
-- Estado: ⬜ pendiente.
+- Estado: ✅ resuelto.
 - Técnica: **forced browsing** después del primer factor.
-- Objetivo: acceder a la cuenta de `carlos` sin introducir su código 2FA.
+- Concepto: validación incompleta del estado 2FA.
 
 ---
 
