@@ -4,8 +4,8 @@ Primer bloque de estudio orientado a fundamentos de vulnerabilidades del lado se
 
 ## Orden de estudio
 
-1. [Path Traversal](01-Path-Traversal.md)
-2. Access Control
+1. [Path Traversal](01-Path-Traversal.md) — primer laboratorio completado ✅
+2. [Access Control](02-Access-Control.md) — en estudio
 3. Authentication
 4. SSRF
 5. File Upload Vulnerabilities
