@@ -1,217 +1,289 @@
 # 01 — Path Traversal
 
+> **Método de estudio:** primero seguimos la explicación y los workflows oficiales de PortSwigger. Las variantes, automatizaciones o atajos se reservan para la futura sección de preparación para examen.
+
 ## Qué es
 
-**Path Traversal** (también llamado **Directory Traversal**) es una vulnerabilidad que permite manipular una ruta de archivo controlada por el usuario para acceder a archivos fuera del directorio que la aplicación debería permitir.
+**Path Traversal** (también llamado **Directory Traversal**) permite manipular una ruta de archivo controlada por el usuario para acceder a archivos fuera del directorio previsto por la aplicación.
 
-Ejemplo conceptual:
-
-```text
-/image?filename=producto.jpg
-```
-
-Si el servidor construye una ruta como:
+PortSwigger usa como ejemplo una aplicación que carga imágenes mediante algo parecido a:
 
 ```text
-/var/www/images/ + filename
+/loadImage?filename=218.png
 ```
 
-y no valida correctamente el valor, un atacante puede intentar salir del directorio `images` mediante secuencias como `../`.
-
-## Qué debes entender antes de memorizar payloads
-
-La pregunta importante no es "¿qué payload uso?", sino:
-
-1. ¿Hay un parámetro que parezca representar un archivo o ruta?
-2. ¿El servidor usa ese valor para leer un archivo?
-3. ¿Puedo hacer que la ruta retroceda directorios?
-4. ¿Existe algún filtro o normalización?
-5. ¿En qué momento ocurre el URL decoding?
-
-## Señales típicas
-
-Buscar parámetros o funcionalidades relacionadas con:
-
-- imágenes;
-- documentos;
-- descargas;
-- plantillas;
-- archivos adjuntos;
-- nombres de fichero;
-- rutas de recursos.
-
-Ejemplos de parámetros sospechosos:
+Si las imágenes están almacenadas en:
 
 ```text
-filename=
-file=
-path=
-image=
-document=
-template=
+/var/www/images/
 ```
 
-## Prueba inicial
+el servidor puede terminar leyendo:
 
-En un entorno autorizado o laboratorio, una prueba clásica en Linux es intentar acceder a:
+```text
+/var/www/images/218.png
+```
+
+Si no existen defensas adecuadas, un valor como:
 
 ```text
 ../../../etc/passwd
 ```
 
-La cantidad exacta de `../` depende de la ruta donde se encuentre la aplicación.
-
-En Windows, un objetivo equivalente de prueba puede ser un archivo conocido del sistema, por ejemplo:
-
-```text
-..\..\..\Windows\win.ini
-```
-
-## Por qué `../` funciona
-
-`..` significa **directorio padre**.
-
-Si la aplicación espera:
-
-```text
-/var/www/images/producto.jpg
-```
-
-pero recibe:
-
-```text
-../../../etc/passwd
-```
-
-la resolución de la ruta puede terminar fuera de `/var/www/images/` y apuntar a `/etc/passwd`.
-
-## Bypasses que debes comprender
-
-### 1. Secuencias anidadas
-
-Si la aplicación elimina `../` una sola vez, pueden existir variantes como:
-
-```text
-....//....//....//etc/passwd
-```
-
-La idea es que, después de una sanitización incompleta, vuelva a aparecer una secuencia válida de traversal.
-
-### 2. URL encoding
-
-Algunos filtros comparan el valor antes o después de decodificarlo.
-
-Ejemplos conceptuales:
-
-```text
-../
-..%2f
-%2e%2e%2f
-```
-
-### 3. Double URL encoding
-
-Si hay más de una etapa de decodificación, una secuencia puede llegar codificada dos veces.
-
-Ejemplo:
-
-```text
-..%252f
-```
-
-`%25` representa el carácter `%`, por lo que una primera decodificación puede producir `%2f`, y una segunda `/`.
-
-### 4. Ruta absoluta
-
-A veces no hace falta usar `../` si la aplicación acepta rutas absolutas:
+puede hacer que la ruta resuelta termine siendo:
 
 ```text
 /etc/passwd
 ```
 
-### 5. Prefijo obligatorio
+## Por qué `../` funciona
 
-Si la aplicación exige que la ruta comience con un directorio concreto, puede ser necesario conservar ese prefijo y después escapar de él.
+`..` representa el **directorio padre**.
 
-### 6. Extensión obligatoria y null byte
-
-En aplicaciones o runtimes antiguos, una comprobación de extensión podía intentar forzar algo como `.jpg`. Históricamente, un null byte codificado (`%00`) podía truncar la cadena a nivel nativo. Esto depende mucho de la tecnología y no debe asumirse como universal.
-
-## Qué mirar en Burp Suite
-
-1. Navegar normalmente por la aplicación.
-2. Revisar **Proxy → HTTP history**.
-3. Buscar requests con parámetros de archivo/ruta.
-4. Enviar la request a **Repeater**.
-5. Cambiar un solo elemento a la vez.
-6. Comparar:
-   - status code;
-   - longitud de respuesta;
-   - contenido;
-   - errores;
-   - diferencias entre una ruta válida e inválida.
-
-## Método mental para el examen/labs
+Desde:
 
 ```text
-¿Veo un nombre de archivo o ruta?
-        ↓
-¿El servidor devuelve el contenido de ese recurso?
-        ↓
-Probar traversal básico
-        ↓
-¿Está bloqueado?
-        ↓
-Identificar el tipo de filtro
-        ↓
-Probar bypass acorde al filtro
+/var/www/images/
 ```
 
-## Errores comunes
+cada `../` retrocede un nivel:
 
-- Probar 20 payloads sin entender qué filtro existe.
-- No comprobar primero cómo se comporta una ruta válida.
-- Cambiar varias cosas de la request a la vez.
-- Confundir un `404` de la aplicación con una prueba definitiva de que no existe traversal.
-- No considerar encoding/decoding.
+```text
+/var/www/images/../     → /var/www/
+/var/www/../            → /var/
+/var/../                → /
+```
+
+Por eso:
+
+```text
+/var/www/images/../../../etc/passwd
+```
+
+termina apuntando a:
+
+```text
+/etc/passwd
+```
+
+En Windows también pueden aparecer secuencias como:
+
+```text
+..\..\..\windows\win.ini
+```
+
+---
+
+# Orden oficial de estudio
+
+En el learning path de PortSwigger:
+
+1. What is path traversal?
+2. Reading arbitrary files via path traversal
+3. **Lab: File path traversal, simple case**
+4. Common obstacles to exploiting path traversal vulnerabilities
+5. Labs Practitioner de bypasses
+6. How to prevent a path traversal attack
+
+---
+
+# Lab Apprentice — File path traversal, simple case
+
+## Objetivo
+
+Recuperar el contenido de:
+
+```text
+/etc/passwd
+```
+
+## Workflow que debemos aprender
+
+El patrón oficial de PortSwigger para estos labs es trabajar sobre la request que carga una imagen:
+
+1. Usar Burp Suite para **interceptar una request que obtiene una imagen de producto**.
+2. Localizar el parámetro:
+
+```text
+filename=
+```
+
+3. Sustituir el nombre de imagen por:
+
+```text
+../../../etc/passwd
+```
+
+4. Enviar/forwardear la request modificada.
+5. Observar que la response contiene `/etc/passwd`.
+
+Ejemplo conceptual:
+
+```http
+GET /image?filename=../../../etc/passwd HTTP/2
+```
+
+Respuesta esperada:
+
+```text
+root:x:0:0:root:/root:/bin/bash
+...
+```
+
+## Qué aprendimos del lab
+
+```text
+request de una imagen
+       ↓
+filename controlado por el usuario
+       ↓
+../../../
+       ↓
+escapamos del directorio de imágenes
+       ↓
+/etc/passwd
+       ↓
+el servidor devuelve un archivo no autorizado
+```
+
+> Haber reproducido la misma prueba desde HTTP history + Repeater también confirma la vulnerabilidad, pero para el material de estudio priorizamos el workflow que enseña PortSwigger.
+
+---
+
+# Common obstacles to exploiting path traversal vulnerabilities
+
+PortSwigger presenta varias defensas comunes y bypasses correspondientes. Estos pertenecen principalmente al learning path completo / Practitioner y deben estudiarse en su orden.
+
+## 1. Absolute path bypass
+
+Si la aplicación bloquea secuencias traversal pero trata el valor como una ruta relativa al working directory, puede funcionar:
+
+```text
+/etc/passwd
+```
+
+## 2. Nested traversal sequences
+
+Si una aplicación elimina `../` de forma no recursiva, pueden existir secuencias como:
+
+```text
+....//
+```
+
+que, tras una sanitización incompleta, vuelvan a producir una secuencia traversal válida.
+
+## 3. URL encoding y double URL encoding
+
+Ejemplos que PortSwigger estudia en este contexto:
+
+```text
+%2e%2e%2f
+%252e%252e%252f
+```
+
+La idea importante es entender **cuándo ocurre el URL decoding** y cuántas veces se decodifica el valor.
+
+## 4. Validación del inicio de la ruta
+
+Si la aplicación exige que el valor empiece por una carpeta concreta, puede ser necesario conservarla:
+
+```text
+/var/www/images/../../../etc/passwd
+```
+
+## 5. Extensión obligatoria y null byte
+
+Si la aplicación exige una extensión como `.png`, PortSwigger incluye un lab donde se usa:
+
+```text
+../../../etc/passwd%00.png
+```
+
+No asumir que este bypass funciona universalmente: se estudia dentro del contexto concreto del lab y de la tecnología vulnerable.
+
+---
+
+# Qué observar en Burp
+
+Según el ejercicio, debemos aprender a identificar:
+
+- la request que obtiene el recurso;
+- el parámetro de archivo;
+- cómo cambia la response al modificarlo;
+- status code;
+- longitud;
+- contenido devuelto;
+- errores de validación.
+
+El uso de **Proxy, Intercept, HTTP history o Repeater** depende del workflow que PortSwigger enseñe en cada ejercicio. No debemos convertir Repeater en una respuesta automática para todos los labs.
+
+---
+
+# Cómo prevenir Path Traversal
+
+PortSwigger recomienda, como primera opción, evitar pasar datos controlados por el usuario a APIs del filesystem.
+
+Cuando no sea posible, la defensa debe incluir validación de entrada y canonicalización segura de la ruta, verificando después que la ruta canonicalizada permanece dentro del directorio esperado.
+
+---
+
+# Método mental
+
+```text
+¿La aplicación recibe un filename/path?
+        ↓
+¿Ese valor termina en una operación del filesystem?
+        ↓
+¿Puedo influir en la ruta?
+        ↓
+¿Existe alguna defensa?
+        ↓
+Entender qué defensa aplica
+        ↓
+Usar la técnica correspondiente que enseña PortSwigger
+```
+
+---
+
+# Errores a evitar
+
+- Memorizar solo `../../../etc/passwd` sin entender la ruta.
 - Memorizar un número fijo de `../`.
+- Probar bypasses Practitioner antes de entender el caso simple.
+- Confundir URL encoding con traversal en sí mismo.
+- Cambiar muchas cosas simultáneamente.
+- Resolver el lab de una manera distinta y no practicar después el workflow oficial.
 
-## Lo que debes poder explicar con tus palabras
+---
 
-Antes de marcar este tema como dominado, deberías poder responder:
+# Checklist
 
-- ¿Qué significa `../`?
-- ¿Por qué puede escapar del directorio previsto?
-- ¿Qué diferencia hay entre sanitización y canonicalización de rutas?
-- ¿Por qué el orden del URL decoding importa?
-- ¿Por qué `....//` puede superar una sanitización incompleta?
-
-## Checklist personal
-
-- [ ] Entiendo qué problema resuelve `../`.
-- [ ] Sé localizar un parámetro que representa un archivo.
-- [ ] Sé interceptarlo y modificarlo con Repeater.
+- [x] Entiendo qué significa `../`.
+- [x] Entiendo cómo se sale de `/var/www/images/`.
+- [x] Sé identificar un parámetro `filename`.
+- [x] He recuperado `/etc/passwd` en el lab simple.
+- [ ] Puedo repetir el lab usando el workflow oficial de interceptación sin ayuda.
+- [ ] Entiendo absolute path bypass.
+- [ ] Entiendo nested traversal.
 - [ ] Entiendo URL encoding y double encoding en este contexto.
-- [ ] Puedo explicar un bypass en vez de solo copiarlo.
-- [ ] He completado los labs Apprentice correspondientes.
-- [ ] He documentado mis errores y aprendizajes.
+- [ ] Entiendo validación de prefijo.
+- [ ] Entiendo el null-byte bypass del lab correspondiente.
 
-## Mis notas después de los labs
+---
 
-> Esta sección se completa después de resolver cada laboratorio.
+# Registro
 
-### Señales que me ayudaron
+## File path traversal, simple case
 
-- Pendiente.
+- Estado: ✅ resuelto.
+- Objetivo: leer `/etc/passwd`.
+- Parámetro relevante: `filename`.
+- Payload: `../../../etc/passwd`.
+- Concepto aprendido: lectura arbitraria de archivos mediante traversal.
+- Pendiente de dominio: poder reproducir con soltura el workflow oficial de Burp sin instrucciones.
 
-### Errores que cometí
+---
 
-- Pendiente.
+# Regla rápida
 
-### Payloads que realmente entendí
-
-- Pendiente.
-
-### Regla rápida que quiero recordar
-
-- Pendiente.
+**Primero entender cómo la aplicación construye la ruta; después estudiar los bypasses en el orden de PortSwigger.**
