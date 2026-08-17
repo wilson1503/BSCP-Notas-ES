@@ -137,12 +137,66 @@ PortSwigger recomienda para quien todavía está aprendiendo:
 4. completar Practice Exam;
 5. leer hints/guidance antes del examen.
 
-También mantiene una lista de labs Practitioner seleccionados y una segunda etapa con labs especialmente útiles para:
+## Labs oficiales especialmente seleccionados para preparación
+
+En la preparación oficial actual, PortSwigger destaca específicamente ejercicios que refuerzan habilidades importantes para el examen. Conviene poder resolverlos sin solución antes de considerar la preparación final completa:
+
+1. **Exploiting cross-site scripting to steal cookies**.
+2. **Blind SQL injection with out-of-band data exfiltration**.
+3. **Forced OAuth profile linking**.
+4. **Brute-forcing a stay-logged-in cookie**.
+5. **Exploiting HTTP request smuggling to capture other users' requests**.
+6. **SSRF with blacklist-based input filter**.
+7. **SQL injection with filter bypass via XML encoding**.
+8. **Discovering vulnerabilities quickly with targeted scanning**.
+
+Este listado **no es una lista de vulnerabilidades garantizadas del examen**. PortSwigger aclara que se selecciona para desarrollar habilidades como:
 
 - cross-user exploitation;
-- out-of-band exploitation;
-- encoding/filter bypass;
-- targeted scanning.
+- OAST / exfiltración fuera de banda;
+- bypass de filtros y encoding;
+- identificación rápida;
+- scanning dirigido.
+
+## Mystery Labs
+
+La preparación oficial incluye Mystery Labs **Practitioner** sin contexto.
+
+Objetivo real:
+
+```text
+no saber qué vulnerabilidad buscas
+→ mapear superficie
+→ reconocer comportamiento vulnerable
+→ seleccionar técnica correcta
+→ explotar
+```
+
+Cuando ya resolvamos Mystery Labs de forma consistente, empezar a cronometrarlos.
+
+## Practice Exam
+
+Actualmente el Practice Exam tiene:
+
+- **1 aplicación**;
+- **2 horas**;
+- formato similar al examen real;
+- posibilidad de repetirlo.
+
+El examen real tiene 2 aplicaciones y 4 horas.
+
+No ir al examen real hasta poder aprobar el Practice Exam de forma reproducible.
+
+## Consejos oficiales al atascarse
+
+PortSwigger recomienda:
+
+- probar ataques contra tu propio browser antes de enviarlos a la víctima;
+- comparar el escenario actual con el lab del que adaptaste la técnica;
+- identificar las suposiciones que estás haciendo y comprobarlas;
+- evitar tunnel vision;
+- volver a mapear la superficie si no encuentras la vulnerabilidad;
+- usar targeted scanning si estás gastando demasiado tiempo en probing manual.
 
 ## Regla de esta carpeta
 
