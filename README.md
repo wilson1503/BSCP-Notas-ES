@@ -73,31 +73,17 @@ Aquí importa aprender también **qué herramienta de Burp usa el lab**: Proxy, 
 
 ### Fase 2 — Preparación específica para el examen
 
-Ya existe una sección separada que se irá refinando mientras avanzamos. Recopila:
-
-- reglas oficiales actuales del examen;
-- cheat sheets en español;
-- prioridades comunitarias por etapa;
-- payloads organizados por contexto;
-- checklists de reconocimiento;
-- comandos y snippets útiles;
-- workflows rápidos en Burp;
-- targeted scanning;
-- encoding/bypasses;
-- metodología de enumeración;
-- fuentes de DCKento, DingyShark, n3oari, botesjuan, nazori y zeeshan811.
+Ya existe una sección separada que se irá refinando mientras avanzamos. Recopila reglas oficiales, cheat sheets, prioridades comunitarias, payloads, checklists y workflows rápidos.
 
 ➡️ [Abrir Preparación para el examen](Preparacion-Examen/README.md)
-
-La finalidad es **ganar velocidad sin confundir los atajos del examen con el material usado para aprender cada vulnerabilidad**.
 
 ## Ruta actual
 
 ### 01 — Server-side vulnerabilities (Apprentice)
 
-- [x] [Path Traversal](01-Server-Side-Vulnerabilities/01-Path-Traversal.md) — primer laboratorio completado
-- [ ] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — 3 labs resueltos; horizontal privilege escalation en progreso
-- [ ] Authentication
+- [x] [Path Traversal](01-Server-Side-Vulnerabilities/01-Path-Traversal.md) — completado
+- [x] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — bloque Apprentice completado
+- [ ] [Authentication](01-Server-Side-Vulnerabilities/03-Authentication.md) — **en progreso**
 - [ ] SSRF
 - [ ] File Upload Vulnerabilities
 - [ ] OS Command Injection
@@ -105,29 +91,31 @@ La finalidad es **ganar velocidad sin confundir los atajos del examen con el mat
 
 ➡️ [Abrir módulo](01-Server-Side-Vulnerabilities/README.md)
 
-## Labs paso a paso
+## Lab actual
 
-Los procedimientos detallados que necesitan guía adicional se guardan en `Labs/`.
+Authentication — primer laboratorio Apprentice:
 
-Lab actual:
+➡️ [Username enumeration via different responses](Labs/Authentication/01-Username-enumeration-via-different-responses.md)
 
-➡️ [Access Control — User ID controlled by request parameter, with unpredictable user IDs](Labs/Access-Control/04-User-ID-controlled-by-request-parameter-unpredictable-GUIDs.md)
+Después:
+
+➡️ [2FA simple bypass](Labs/Authentication/02-2FA-simple-bypass.md)
 
 ## Conceptos básicos clave
 
-Antes y durante los labs, usar esta sección como referencia rápida:
-
 ➡️ [Abrir Conceptos Básicos Clave](Conceptos-Basicos-Clave/README.md)
 
-Incluye `robots.txt`, descubrimiento de rutas, endpoints, parámetros, métodos HTTP, status codes, headers, cookies, sesiones, Authentication vs Authorization, URL encoding, workflow básico de Burp y Security by Obscurity / rutas expuestas en JavaScript.
+Para Authentication se añadió específicamente:
+
+➡️ [Burp Intruder — conceptos básicos](Conceptos-Basicos-Clave/09-Burp-Intruder-Basico.md)
 
 ## Estructura
 
 - [`00-Ruta-BSCP/`](00-Ruta-BSCP/) — plan, progreso y metodología.
 - [`Conceptos-Basicos-Clave/`](Conceptos-Basicos-Clave/) — fundamentos web reutilizables.
 - [`01-Server-Side-Vulnerabilities/`](01-Server-Side-Vulnerabilities/) — primer learning path.
-- [`Labs/`](Labs/) — procedimientos oficiales paso a paso y práctica de Burp para cada lab que lo necesite.
-- [`Preparacion-Examen/`](Preparacion-Examen/) — material de velocidad, priorización y repaso para usar después de aprender los temas.
+- [`Labs/`](Labs/) — procedimientos oficiales paso a paso.
+- [`Preparacion-Examen/`](Preparacion-Examen/) — material para velocidad, priorización y repaso.
 - [`Templates/`](Templates/) — plantillas de estudio.
 - [`Referencias/`](Referencias/) — fuentes oficiales y comunitarias.
 
@@ -135,15 +123,7 @@ Incluye `robots.txt`, descubrimiento de rutas, endpoints, parámetros, métodos 
 
 **Entender primero la técnica que PortSwigger está enseñando. Optimizar después.**
 
-No guardar solamente un payload. Para cada lab debemos saber:
-
-- qué concepto estaba enseñando;
-- qué señal llevó a identificarlo;
-- qué request/response era relevante;
-- qué herramienta y workflow de Burp utilizó PortSwigger;
-- qué modificación se hizo;
-- por qué funcionó;
-- qué control de seguridad estaba fallando.
+No guardar solamente un payload. Para cada lab debemos saber qué concepto enseña, qué request/response importa, qué herramienta de Burp se utiliza, qué cambia y por qué funciona.
 
 ## Uso responsable
 
