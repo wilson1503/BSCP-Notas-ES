@@ -31,6 +31,7 @@ Si algo de esta carpeta contradice a PortSwigger, **PortSwigger gana**.
 6. [Bypasses, encoding y headers](06-Bypasses-Encoding-Headers.md)
 7. [Checklist rápido por vulnerabilidad](07-Checklist-Rapido-por-Vulnerabilidad.md)
 8. [Fuentes y criterio editorial](08-Fuentes-y-Criterio.md)
+9. [Herramientas, extensiones y wordlists](09-Herramientas-Extensiones-y-Wordlists.md)
 
 ### Cheat sheets por fase
 
@@ -47,6 +48,7 @@ Si algo de esta carpeta contradice a PortSwigger, **PortSwigger gana**.
 - payloads pequeños y reutilizables;
 - pruebas mínimas antes de descartar una hipótesis;
 - uso dirigido de Scanner, Repeater, Intruder, Collaborator y DOM Invader;
+- herramientas/extensiones que aportan velocidad real;
 - técnicas de encoding y bypass que se repiten entre categorías;
 - recordatorios de cadenas de vulnerabilidades;
 - errores de tiempo frecuentes y rabbit holes.
