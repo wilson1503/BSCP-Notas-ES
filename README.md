@@ -18,7 +18,7 @@ Los repositorios de terceros se usan como referencia; estas notas se redactan y 
 ### 01 — Server-side vulnerabilities (Apprentice)
 
 - [x] [Path Traversal](01-Server-Side-Vulnerabilities/01-Path-Traversal.md) — primer laboratorio completado
-- [ ] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — siguiente tema
+- [x] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — primer laboratorio completado
 - [ ] Authentication
 - [ ] SSRF
 - [ ] File Upload Vulnerabilities
@@ -27,9 +27,18 @@ Los repositorios de terceros se usan como referencia; estas notas se redactan y 
 
 ➡️ [Abrir módulo](01-Server-Side-Vulnerabilities/README.md)
 
+## Conceptos básicos clave
+
+Antes y durante los labs, usar esta sección como referencia rápida:
+
+➡️ [Abrir Conceptos Básicos Clave](Conceptos-Basicos-Clave/README.md)
+
+Incluye `robots.txt`, descubrimiento de rutas, endpoints, parámetros, métodos HTTP, status codes, headers, cookies, sesiones, Authentication vs Authorization, URL encoding y workflow básico de Burp.
+
 ## Estructura
 
 - [`00-Ruta-BSCP/`](00-Ruta-BSCP/) — plan, progreso y metodología.
+- [`Conceptos-Basicos-Clave/`](Conceptos-Basicos-Clave/) — fundamentos web que aparecen repetidamente en los labs y el examen.
 - [`01-Server-Side-Vulnerabilities/`](01-Server-Side-Vulnerabilities/) — primer learning path.
 - [`Labs/`](Labs/) — notas de laboratorios realizados.
 - [`CheatSheets/`](CheatSheets/) — referencias rápidas para repaso.
