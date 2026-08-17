@@ -18,7 +18,7 @@ Los repositorios de terceros se usan como referencia; estas notas se redactan y 
 ### 01 — Server-side vulnerabilities (Apprentice)
 
 - [x] [Path Traversal](01-Server-Side-Vulnerabilities/01-Path-Traversal.md) — primer laboratorio completado
-- [x] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — primer laboratorio completado
+- [x] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — 2 primeros laboratorios completados
 - [ ] Authentication
 - [ ] SSRF
 - [ ] File Upload Vulnerabilities
@@ -33,7 +33,7 @@ Antes y durante los labs, usar esta sección como referencia rápida:
 
 ➡️ [Abrir Conceptos Básicos Clave](Conceptos-Basicos-Clave/README.md)
 
-Incluye `robots.txt`, descubrimiento de rutas, endpoints, parámetros, métodos HTTP, status codes, headers, cookies, sesiones, Authentication vs Authorization, URL encoding y workflow básico de Burp.
+Incluye `robots.txt`, descubrimiento de rutas, endpoints, parámetros, métodos HTTP, status codes, headers, cookies, sesiones, Authentication vs Authorization, URL encoding, workflow básico de Burp y **Security by Obscurity / rutas expuestas en JavaScript**.
 
 ## Estructura
 
