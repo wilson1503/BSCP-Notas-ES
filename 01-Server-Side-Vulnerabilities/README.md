@@ -6,27 +6,42 @@ Primer bloque de estudio orientado a fundamentos de vulnerabilidades del lado se
 
 1. [Path Traversal](01-Path-Traversal.md) — completado ✅
 2. [Access Control](02-Access-Control.md) — completado ✅
-3. [Authentication](03-Authentication.md) — en estudio 🟡
-4. SSRF
+3. [Authentication](03-Authentication.md) — completado ✅
+4. [Server-side request forgery (SSRF)](04-SSRF.md) — en estudio 🟡
 5. File Upload Vulnerabilities
 6. OS Command Injection
 7. SQL Injection
 
-## Authentication — siguiente paso
+## SSRF — siguiente paso
 
-PortSwigger incluye actualmente 10 elementos en el bloque Authentication de este learning path y **2 labs Apprentice**:
+PortSwigger incluye actualmente 6 elementos en el bloque SSRF de este learning path y **2 labs Apprentice**:
 
-1. **Username enumeration via different responses** — siguiente lab.
-2. **2FA simple bypass**.
+1. **Basic SSRF against the local server** — siguiente lab.
+2. **Basic SSRF against another back-end system**.
 
 Procedimientos preparados:
 
-- [Lab 1 — Username enumeration via different responses](../Labs/Authentication/01-Username-enumeration-via-different-responses.md)
-- [Lab 2 — 2FA simple bypass](../Labs/Authentication/02-2FA-simple-bypass.md)
+- [Lab 1 — Basic SSRF against the local server](../Labs/SSRF/01-Basic-SSRF-against-local-server.md)
+- [Lab 2 — Basic SSRF against another back-end system](../Labs/SSRF/02-Basic-SSRF-against-backend-system.md)
 
-El primer lab introduce de forma práctica **Burp Intruder**, por lo que además existe una referencia básica:
+Referencia básica añadida:
 
-- [Burp Intruder — conceptos básicos](../Conceptos-Basicos-Clave/09-Burp-Intruder-Basico.md)
+- [SSRF: loopback, localhost y redes internas](../Conceptos-Basicos-Clave/10-SSRF-Loopback-y-Redes-Internas.md)
+
+## Burp que se practicará
+
+En este bloque reforzaremos:
+
+```text
+Proxy → Intercept
+Send to Repeater
+modificar stockApi
+leer HTML en Responses
+Send to Intruder
+Payload type: Numbers
+ordenar por Status code
+Intruder → Repeater
+```
 
 ## Objetivo del bloque
 
