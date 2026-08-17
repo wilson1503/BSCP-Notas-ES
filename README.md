@@ -83,8 +83,8 @@ Ya existe una sección separada que se irá refinando mientras avanzamos. Recopi
 
 - [x] [Path Traversal](01-Server-Side-Vulnerabilities/01-Path-Traversal.md) — completado
 - [x] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — bloque Apprentice completado
-- [ ] [Authentication](01-Server-Side-Vulnerabilities/03-Authentication.md) — **en progreso**
-- [ ] SSRF
+- [x] [Authentication](01-Server-Side-Vulnerabilities/03-Authentication.md) — bloque Apprentice completado
+- [ ] [Server-side request forgery (SSRF)](01-Server-Side-Vulnerabilities/04-SSRF.md) — **en progreso**
 - [ ] File Upload Vulnerabilities
 - [ ] OS Command Injection
 - [ ] SQL Injection
@@ -93,21 +93,21 @@ Ya existe una sección separada que se irá refinando mientras avanzamos. Recopi
 
 ## Lab actual
 
-Authentication — primer laboratorio Apprentice:
+SSRF — primer laboratorio Apprentice:
 
-➡️ [Username enumeration via different responses](Labs/Authentication/01-Username-enumeration-via-different-responses.md)
+➡️ [Basic SSRF against the local server](Labs/SSRF/01-Basic-SSRF-against-local-server.md)
 
 Después:
 
-➡️ [2FA simple bypass](Labs/Authentication/02-2FA-simple-bypass.md)
+➡️ [Basic SSRF against another back-end system](Labs/SSRF/02-Basic-SSRF-against-backend-system.md)
 
 ## Conceptos básicos clave
 
 ➡️ [Abrir Conceptos Básicos Clave](Conceptos-Basicos-Clave/README.md)
 
-Para Authentication se añadió específicamente:
+Para SSRF se añadió específicamente:
 
-➡️ [Burp Intruder — conceptos básicos](Conceptos-Basicos-Clave/09-Burp-Intruder-Basico.md)
+➡️ [SSRF: loopback, localhost y redes internas](Conceptos-Basicos-Clave/10-SSRF-Loopback-y-Redes-Internas.md)
 
 ## Estructura
 
