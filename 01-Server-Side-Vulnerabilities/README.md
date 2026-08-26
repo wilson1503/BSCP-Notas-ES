@@ -8,40 +8,35 @@ Primer bloque de estudio orientado a fundamentos de vulnerabilidades del lado se
 2. [Access Control](02-Access-Control.md) — completado ✅
 3. [Authentication](03-Authentication.md) — completado ✅
 4. [Server-side request forgery (SSRF)](04-SSRF.md) — completado ✅
-5. [File Upload Vulnerabilities](05-File-Upload-Vulnerabilities.md) — en estudio 🟡
-6. OS Command Injection
+5. [File Upload Vulnerabilities](05-File-Upload-Vulnerabilities.md) — completado ✅
+6. [OS Command Injection](06-OS-Command-Injection.md) — en estudio 🟡
 7. SQL Injection
 
-## File Upload — siguiente paso
+## OS Command Injection — siguiente paso
 
-PortSwigger incluye actualmente 9 elementos en este bloque del learning path y **2 labs Apprentice**:
+PortSwigger incluye actualmente **5 elementos** en este bloque y **1 lab Apprentice**:
 
-1. **Remote code execution via web shell upload** — siguiente lab.
-2. **Web shell upload via Content-Type restriction bypass**.
+1. **OS command injection, simple case** — siguiente lab.
 
-Procedimientos preparados:
+Procedimiento preparado:
 
-- [Lab 1 — Remote code execution via web shell upload](../Labs/File-Upload/01-RCE-via-web-shell-upload.md)
-- [Lab 2 — Web shell upload via Content-Type restriction bypass](../Labs/File-Upload/02-Web-shell-via-Content-Type-bypass.md)
+- [Lab — OS command injection, simple case](../Labs/OS-Command-Injection/01-OS-command-injection-simple-case.md)
 
 Referencia básica añadida:
 
-- [Multipart/form-data y File Upload](../Conceptos-Basicos-Clave/11-Multipart-Form-Data-y-File-Upload.md)
+- [OS Command Injection y separadores del shell](../Conceptos-Basicos-Clave/12-OS-Command-Injection-y-Shell-Separators.md)
 
 ## Burp que se practicará
 
-En este bloque reforzaremos:
+En este bloque reforzaremos principalmente:
 
 ```text
-Proxy → HTTP history
-filtrar/ver requests de imágenes
-identificar GET /files/avatars/...
-Send to Repeater
-leer multipart/form-data
-identificar filename=
-identificar Content-Type de una parte
-modificar MIME en Repeater
-leer ejecución PHP en Response
+Proxy → Intercept
+interceptar POST /product/stock
+leer parámetros application/x-www-form-urlencoded
+modificar storeId
+Forward
+observar salida del comando en la Response
 ```
 
 ## Objetivo del bloque
@@ -53,7 +48,7 @@ Aprender a reconocer cuándo una aplicación permite que datos controlados por e
 No memorizar payloads aislados. Para cada vulnerabilidad debemos responder:
 
 - ¿Qué entrada controla el usuario?
-- ¿Qué hace el servidor con esa entrada?
+- ¿Qué intérprete procesa finalmente esa entrada?
 - ¿Qué cambio pequeño puedo hacer para comprobar una hipótesis?
 - ¿Qué respuesta confirma o descarta la vulnerabilidad?
 - ¿Qué herramienta de Burp enseña el lab?
@@ -61,4 +56,4 @@ No memorizar payloads aislados. Para cada vulnerabilidad debemos responder:
 
 ## Referencias comunitarias
 
-Las referencias comunitarias se mantienen en `Preparacion-Examen/`. El aprendizaje de este módulo sigue primero PortSwigger y sus soluciones oficiales.
+Las referencias comunitarias se mantienen en `Preparacion-Examen/`. El aprendizaje de este módulo sigue primero PortSwigger y su solución oficial.
