@@ -86,24 +86,26 @@ Ya existe una sección separada que se irá refinando mientras avanzamos. Recopi
 - [x] [Authentication](01-Server-Side-Vulnerabilities/03-Authentication.md) — completado
 - [x] [Server-side request forgery (SSRF)](01-Server-Side-Vulnerabilities/04-SSRF.md) — completado
 - [x] [File Upload Vulnerabilities](01-Server-Side-Vulnerabilities/05-File-Upload-Vulnerabilities.md) — completado
-- [ ] [OS Command Injection](01-Server-Side-Vulnerabilities/06-OS-Command-Injection.md) — **en progreso**
-- [ ] SQL Injection
+- [ ] [OS Command Injection](01-Server-Side-Vulnerabilities/06-OS-Command-Injection.md) — en progreso
+- [ ] [SQL Injection](01-Server-Side-Vulnerabilities/07-SQL-Injection.md) — **material preparado como siguiente módulo**
 
 ➡️ [Abrir módulo](01-Server-Side-Vulnerabilities/README.md)
 
-## Lab actual
+## SQL Injection preparado
 
-OS Command Injection — único laboratorio Apprentice del bloque:
+PortSwigger incluye **2 labs Apprentice** de SQL Injection en este learning path:
 
-➡️ [OS command injection, simple case](Labs/OS-Command-Injection/01-OS-command-injection-simple-case.md)
+➡️ [Lab 1 — WHERE clause allowing retrieval of hidden data](Labs/SQL-Injection/01-WHERE-clause-retrieving-hidden-data.md)
+
+➡️ [Lab 2 — SQL injection allowing login bypass](Labs/SQL-Injection/02-SQLi-login-bypass.md)
+
+Referencia previa recomendada:
+
+➡️ [SQL básico para entender SQL Injection](Conceptos-Basicos-Clave/13-SQL-Basico-para-SQL-Injection.md)
 
 ## Conceptos básicos clave
 
 ➡️ [Abrir Conceptos Básicos Clave](Conceptos-Basicos-Clave/README.md)
-
-Para OS Command Injection se añadió específicamente:
-
-➡️ [OS Command Injection y separadores del shell](Conceptos-Basicos-Clave/12-OS-Command-Injection-y-Shell-Separators.md)
 
 ## Estructura
 
