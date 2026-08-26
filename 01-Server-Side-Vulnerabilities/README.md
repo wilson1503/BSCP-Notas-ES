@@ -1,74 +1,55 @@
-# 01 — Server-side vulnerabilities
+# 01 — Server-side vulnerabilities — Apprentice
 
-Primer bloque de estudio orientado a fundamentos de vulnerabilidades del lado servidor, siguiendo el learning path **Server-side vulnerabilities — Apprentice** de PortSwigger.
+Primer learning path completado siguiendo **Server-side vulnerabilities — Apprentice** de PortSwigger.
 
-## Orden de estudio
+## Estado
 
-1. [Path Traversal](01-Path-Traversal.md) — completado ✅
-2. [Access Control](02-Access-Control.md) — completado ✅
-3. [Authentication](03-Authentication.md) — completado ✅
-4. [Server-side request forgery (SSRF)](04-SSRF.md) — completado ✅
-5. [File Upload Vulnerabilities](05-File-Upload-Vulnerabilities.md) — completado ✅
-6. [OS Command Injection](06-OS-Command-Injection.md) — en estudio 🟡
-7. [SQL Injection](07-SQL-Injection.md) — preparado para continuar ⬜
+✅ **Completado**
 
-## OS Command Injection — módulo actual
+## Orden completado
 
-PortSwigger incluye **5 elementos** en este bloque y **1 lab Apprentice**:
+1. [Path Traversal](01-Path-Traversal.md) — ✅
+2. [Access Control](02-Access-Control.md) — ✅
+3. [Authentication](03-Authentication.md) — ✅
+4. [Server-side request forgery (SSRF)](04-SSRF.md) — ✅
+5. [File Upload Vulnerabilities](05-File-Upload-Vulnerabilities.md) — ✅
+6. [OS Command Injection](06-OS-Command-Injection.md) — ✅
+7. [SQL Injection](07-SQL-Injection.md) — ✅
 
-1. **OS command injection, simple case**.
+## Qué se practicó en Burp
 
-Procedimiento:
-
-- [Lab — OS command injection, simple case](../Labs/OS-Command-Injection/01-OS-command-injection-simple-case.md)
-
-Referencia básica:
-
-- [OS Command Injection y separadores del shell](../Conceptos-Basicos-Clave/12-OS-Command-Injection-y-Shell-Separators.md)
-
-## SQL Injection — siguiente módulo preparado
-
-PortSwigger incluye **7 elementos** en SQL Injection dentro de este learning path y **2 labs Apprentice**:
-
-1. **SQL injection vulnerability in WHERE clause allowing retrieval of hidden data**.
-2. **SQL injection vulnerability allowing login bypass**.
-
-Material preparado:
-
-- [Teoría — SQL Injection](07-SQL-Injection.md)
-- [Lab 1 — WHERE clause / hidden data](../Labs/SQL-Injection/01-WHERE-clause-retrieving-hidden-data.md)
-- [Lab 2 — login bypass](../Labs/SQL-Injection/02-SQLi-login-bypass.md)
-- [SQL básico para entender SQL Injection](../Conceptos-Basicos-Clave/13-SQL-Basico-para-SQL-Injection.md)
-
-## Burp que se practicará en SQL Injection
-
-En los dos labs Apprentice el workflow oficial principal es:
+Durante este path se usaron y reforzaron:
 
 ```text
 Proxy → Intercept
-identificar parámetro vulnerable
-modificar request
-Forward
-observar cómo cambia la aplicación
+Proxy → HTTP history
+Repeater
+Intruder
+requests GET y POST
+cookies y parámetros
+multipart/form-data
+URL encoding básico
+lectura de Response
 ```
 
-En el primer lab se modifica `category`; en el segundo, `username`.
+## Conceptos principales cubiertos
 
-## Objetivo del bloque
+- path traversal;
+- autorización vertical/horizontal;
+- autenticación y 2FA;
+- SSRF contra loopback y redes internas;
+- file upload y MIME bypass;
+- OS command injection;
+- SQL injection básica y login bypass.
 
-Aprender a reconocer cuándo una aplicación permite que datos controlados por el usuario afecten directamente operaciones del servidor: lectura de archivos, autorización, autenticación, solicitudes internas, subida de archivos, comandos del sistema y consultas SQL.
+## Siguiente etapa
 
-## Cómo usar estas notas
+Pasamos a **Practitioner**, comenzando por SQL Injection para profundizar inmediatamente lo aprendido.
 
-No memorizar payloads aislados. Para cada vulnerabilidad debemos responder:
+➡️ [SQL Injection — Practitioner](../02-Practitioner/01-SQL-Injection.md)
 
-- ¿Qué entrada controla el usuario?
-- ¿Qué intérprete procesa finalmente esa entrada?
-- ¿Qué cambio pequeño puedo hacer para comprobar una hipótesis?
-- ¿Qué respuesta confirma o descarta la vulnerabilidad?
-- ¿Qué herramienta de Burp enseña el lab?
-- ¿Qué defensa está fallando?
+➡️ [Labs SQL Injection Practitioner](../Labs/SQL-Injection-Practitioner/README.md)
 
-## Referencias comunitarias
+## Regla mantenida
 
-Las referencias comunitarias se mantienen en `Preparacion-Examen/`. El aprendizaje de este módulo sigue primero PortSwigger y sus soluciones oficiales.
+Las referencias comunitarias y los atajos se mantienen en `Preparacion-Examen/`. El aprendizaje técnico sigue primero PortSwigger y sus soluciones oficiales.
