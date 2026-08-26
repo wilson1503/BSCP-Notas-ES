@@ -76,7 +76,7 @@ En este bloque Apprentice no necesitamos todavía construir shells complejas. El
 
 ---
 
-# Lab 1 — Remote code execution via web shell upload ⏳
+# Lab 1 — Remote code execution via web shell upload ✅
 
 > [Procedimiento completo paso a paso](../Labs/File-Upload/01-RCE-via-web-shell-upload.md)
 
@@ -140,7 +140,7 @@ El nombre del archivo sigue siendo `.php`; únicamente falsificamos el MIME decl
 
 ---
 
-# Lab 2 — Web shell upload via Content-Type restriction bypass
+# Lab 2 — Web shell upload via Content-Type restriction bypass ⏳
 
 > [Procedimiento completo paso a paso](../Labs/File-Upload/02-Web-shell-via-Content-Type-bypass.md)
 
@@ -276,27 +276,27 @@ Los estudiaremos cuando PortSwigger los introduzca. No los usaremos para sustitu
 
 # Burp que debemos dominar en este bloque
 
-- [ ] Reconocer `multipart/form-data`.
-- [ ] Localizar la parte del archivo dentro del body.
-- [ ] Identificar `filename=`.
+- [x] Reconocer `multipart/form-data`.
+- [x] Localizar la parte del archivo dentro del body.
+- [x] Identificar `filename=`.
 - [ ] Identificar el `Content-Type` de una parte multipart.
 - [ ] Enviar un upload a Repeater.
 - [ ] Modificar el MIME sin alterar innecesariamente el resto.
-- [ ] Encontrar la URL final del archivo subido.
-- [ ] Distinguir upload exitoso de ejecución exitosa.
+- [x] Encontrar la URL final del archivo subido.
+- [x] Distinguir upload exitoso de ejecución exitosa.
 
 ---
 
 # Checklist Apprentice
 
-- [ ] Entiendo qué es una vulnerabilidad de file upload.
-- [ ] Entiendo qué significa web shell.
-- [ ] Entiendo por qué un `.php` puede producir RCE.
-- [ ] Sé leer una request `multipart/form-data`.
+- [x] Entiendo qué es una vulnerabilidad de file upload.
+- [x] Entiendo qué significa web shell.
+- [x] Entiendo por qué un `.php` puede producir RCE.
+- [x] Sé leer una request `multipart/form-data`.
 - [ ] Entiendo que `Content-Type` es controlable por el cliente.
 - [ ] Sé usar Repeater para modificar el MIME de una parte multipart.
-- [ ] Sé encontrar y abrir el archivo subido.
-- [ ] Lab 1 completado.
+- [x] Sé encontrar y abrir el archivo subido.
+- [x] Lab 1 completado.
 - [ ] Lab 2 completado.
 
 ---
@@ -305,13 +305,13 @@ Los estudiaremos cuando PortSwigger los introduzca. No los usaremos para sustitu
 
 ## Lab 1 — Remote code execution via web shell upload
 
-- Estado: ⏳ siguiente lab.
+- Estado: ✅ resuelto.
 - Objetivo: leer `/home/carlos/secret`.
 - Idea: upload PHP sin restricciones.
 
 ## Lab 2 — Web shell upload via Content-Type restriction bypass
 
-- Estado: ⬜ pendiente.
+- Estado: ⏳ en progreso.
 - Objetivo: leer `/home/carlos/secret`.
 - Técnica: modificar el MIME declarado a `image/jpeg`.
 
