@@ -10,34 +10,49 @@ Primer bloque de estudio orientado a fundamentos de vulnerabilidades del lado se
 4. [Server-side request forgery (SSRF)](04-SSRF.md) — completado ✅
 5. [File Upload Vulnerabilities](05-File-Upload-Vulnerabilities.md) — completado ✅
 6. [OS Command Injection](06-OS-Command-Injection.md) — en estudio 🟡
-7. SQL Injection
+7. [SQL Injection](07-SQL-Injection.md) — preparado para continuar ⬜
 
-## OS Command Injection — siguiente paso
+## OS Command Injection — módulo actual
 
-PortSwigger incluye actualmente **5 elementos** en este bloque y **1 lab Apprentice**:
+PortSwigger incluye **5 elementos** en este bloque y **1 lab Apprentice**:
 
-1. **OS command injection, simple case** — siguiente lab.
+1. **OS command injection, simple case**.
 
-Procedimiento preparado:
+Procedimiento:
 
 - [Lab — OS command injection, simple case](../Labs/OS-Command-Injection/01-OS-command-injection-simple-case.md)
 
-Referencia básica añadida:
+Referencia básica:
 
 - [OS Command Injection y separadores del shell](../Conceptos-Basicos-Clave/12-OS-Command-Injection-y-Shell-Separators.md)
 
-## Burp que se practicará
+## SQL Injection — siguiente módulo preparado
 
-En este bloque reforzaremos principalmente:
+PortSwigger incluye **7 elementos** en SQL Injection dentro de este learning path y **2 labs Apprentice**:
+
+1. **SQL injection vulnerability in WHERE clause allowing retrieval of hidden data**.
+2. **SQL injection vulnerability allowing login bypass**.
+
+Material preparado:
+
+- [Teoría — SQL Injection](07-SQL-Injection.md)
+- [Lab 1 — WHERE clause / hidden data](../Labs/SQL-Injection/01-WHERE-clause-retrieving-hidden-data.md)
+- [Lab 2 — login bypass](../Labs/SQL-Injection/02-SQLi-login-bypass.md)
+- [SQL básico para entender SQL Injection](../Conceptos-Basicos-Clave/13-SQL-Basico-para-SQL-Injection.md)
+
+## Burp que se practicará en SQL Injection
+
+En los dos labs Apprentice el workflow oficial principal es:
 
 ```text
 Proxy → Intercept
-interceptar POST /product/stock
-leer parámetros application/x-www-form-urlencoded
-modificar storeId
+identificar parámetro vulnerable
+modificar request
 Forward
-observar salida del comando en la Response
+observar cómo cambia la aplicación
 ```
+
+En el primer lab se modifica `category`; en el segundo, `username`.
 
 ## Objetivo del bloque
 
@@ -56,4 +71,4 @@ No memorizar payloads aislados. Para cada vulnerabilidad debemos responder:
 
 ## Referencias comunitarias
 
-Las referencias comunitarias se mantienen en `Preparacion-Examen/`. El aprendizaje de este módulo sigue primero PortSwigger y su solución oficial.
+Las referencias comunitarias se mantienen en `Preparacion-Examen/`. El aprendizaje de este módulo sigue primero PortSwigger y sus soluciones oficiales.
