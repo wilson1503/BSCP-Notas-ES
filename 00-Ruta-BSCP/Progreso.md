@@ -1,34 +1,61 @@
 # Progreso BSCP
 
-## Módulo actual
+## Etapa actual
 
-**Server-side vulnerabilities — Apprentice**
+**Practitioner — SQL Injection**
+
+## Server-side vulnerabilities — Apprentice
 
 | Tema | Estado | Notas |
 |---|---|---|
 | Path Traversal | ✅ Completado | Lab Apprentice completado |
-| Access Control | ✅ Completado | Todos los labs Apprentice del bloque completados |
+| Access Control | ✅ Completado | Todos los labs Apprentice completados |
 | Authentication | ✅ Completado | 2 labs Apprentice completados |
 | SSRF | ✅ Completado | 2 labs Apprentice completados |
 | File Upload | ✅ Completado | 2 labs Apprentice completados |
-| OS Command Injection | 🟡 En progreso | Lab simple pendiente de confirmación como Solved |
-| SQL Injection | ⬜ Preparado | 2 labs Apprentice documentados y listos |
+| OS Command Injection | ✅ Completado | Lab simple completado |
+| SQL Injection | ✅ Completado | 2 labs Apprentice completados |
 
-## OS Command Injection — labs Apprentice
+**Resultado:** ✅ learning path Server-side vulnerabilities — Apprentice completado.
 
-- [ ] OS command injection, simple case
+---
 
-## SQL Injection — labs Apprentice preparados
+# SQL Injection — Practitioner
 
-- [ ] SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
-- [ ] SQL injection vulnerability allowing login bypass
+El learning path oficial de SQL Injection contiene **13 labs marcados Practitioner**. Empezamos por el bloque UNION.
+
+## Bloque A — UNION
+
+- [ ] 01 — Determining the number of columns returned by the query
+- [ ] 02 — Finding a column containing text
+- [ ] 03 — Retrieving data from other tables
+- [ ] 04 — Retrieving multiple values in a single column
+
+## Bloque B — Examining the database
+
+- [ ] 05 — Querying database type/version on MySQL and Microsoft
+- [ ] 06 — Listing database contents on non-Oracle databases
+
+## Bloque C — Blind SQL injection
+
+- [ ] 07 — Conditional responses
+- [ ] 08 — Conditional errors
+- [ ] 09 — Visible error-based SQL injection
+- [ ] 10 — Time delays and information retrieval
+- [ ] 11 — Out-of-band interaction
+- [ ] 12 — Out-of-band data exfiltration
+
+## Bloque D — Encoding / contexts
+
+- [ ] 13 — Filter bypass via XML encoding
 
 Material:
 
-- [Teoría SQL Injection](../01-Server-Side-Vulnerabilities/07-SQL-Injection.md)
-- [Lab 1 — WHERE clause](../Labs/SQL-Injection/01-WHERE-clause-retrieving-hidden-data.md)
-- [Lab 2 — login bypass](../Labs/SQL-Injection/02-SQLi-login-bypass.md)
-- [SQL básico](../Conceptos-Basicos-Clave/13-SQL-Basico-para-SQL-Injection.md)
+- [SQL Injection — Practitioner](../02-Practitioner/01-SQL-Injection.md)
+- [Índice de labs](../Labs/SQL-Injection-Practitioner/README.md)
+- [SQL UNION, NULL y tipos](../Conceptos-Basicos-Clave/14-SQL-UNION-NULL-y-Tipos-de-Datos.md)
+
+---
 
 ## Convención
 
@@ -40,8 +67,8 @@ Material:
 ## Registro de estudio
 
 ```text
-2026-08-26 | File Upload | — | 2 labs Apprentice completados | pasar a OS Command Injection
-2026-08-26 | SQL Injection | — | material y 2 labs Apprentice preparados | siguiente módulo listo
+2026-08-26 | Server-side Apprentice | — | path completo | comenzar SQL Injection Practitioner
+2026-08-26 | SQL Injection Practitioner | — | módulo + primeros 4 labs UNION preparados | empezar Lab 01
 ```
 
 Añadir una línea por sesión:
