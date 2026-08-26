@@ -23,6 +23,7 @@ Esta carpeta reúne conceptos que aparecen una y otra vez en Web Security Academ
 8. [Security by Obscurity y rutas expuestas en JavaScript](08-Security-by-Obscurity-y-Rutas-en-JavaScript.md)
 9. [Burp Intruder — conceptos básicos](09-Burp-Intruder-Basico.md)
 10. [SSRF: loopback, localhost y redes internas](10-SSRF-Loopback-y-Redes-Internas.md)
+11. [Multipart/form-data y File Upload](11-Multipart-Form-Data-y-File-Upload.md)
 
 ## Qué deberías ser capaz de hacer
 
@@ -42,6 +43,8 @@ Después de leer esta sección deberías poder mirar una request HTTP y responde
 - ¿Sé cuándo conviene automatizar una prueba con **Intruder** y qué diferencia de respuesta estoy buscando?
 - ¿Entiendo la diferencia entre mi `localhost` y el `localhost` del servidor remoto?
 - ¿Puedo reconocer una URL que apunta a una red interna y separar protocolo, host, puerto y path?
+- ¿Puedo distinguir el `Content-Type` global de una request multipart del `Content-Type` de la parte que contiene el archivo?
+- ¿Sé localizar `filename=` y el contenido de un archivo en una request de upload?
 
 ## Regla mental
 
