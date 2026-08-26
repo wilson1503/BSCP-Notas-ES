@@ -10,14 +10,13 @@
 | Access Control | ✅ Completado | Todos los labs Apprentice del bloque completados |
 | Authentication | ✅ Completado | 2 labs Apprentice completados |
 | SSRF | ✅ Completado | 2 labs Apprentice completados |
-| File Upload | 🟡 En progreso | Siguiente: Remote code execution via web shell upload |
-| OS Command Injection | ⬜ Pendiente | |
+| File Upload | ✅ Completado | 2 labs Apprentice completados |
+| OS Command Injection | 🟡 En progreso | Siguiente: OS command injection, simple case |
 | SQL Injection | ⬜ Pendiente | |
 
-## File Upload — labs Apprentice
+## OS Command Injection — labs Apprentice
 
-- [ ] Remote code execution via web shell upload
-- [ ] Web shell upload via Content-Type restriction bypass
+- [ ] OS command injection, simple case
 
 ## Convención
 
@@ -29,7 +28,7 @@
 ## Registro de estudio
 
 ```text
-2026-08-25 | SSRF | — | 2 labs Apprentice completados | pasar a File Upload Vulnerabilities
+2026-08-26 | File Upload | — | 2 labs Apprentice completados | pasar a OS Command Injection
 ```
 
 Añadir una línea por sesión:
