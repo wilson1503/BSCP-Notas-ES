@@ -9,20 +9,15 @@
 | Path Traversal | ✅ Completado | Lab Apprentice completado |
 | Access Control | ✅ Completado | Todos los labs Apprentice del bloque completados |
 | Authentication | ✅ Completado | 2 labs Apprentice completados |
-| SSRF | 🟡 En progreso | Siguiente: Basic SSRF against the local server |
-| File Upload | ⬜ Pendiente | |
+| SSRF | ✅ Completado | 2 labs Apprentice completados |
+| File Upload | 🟡 En progreso | Siguiente: Remote code execution via web shell upload |
 | OS Command Injection | ⬜ Pendiente | |
 | SQL Injection | ⬜ Pendiente | |
 
-## Authentication — labs Apprentice
+## File Upload — labs Apprentice
 
-- [x] Username enumeration via different responses
-- [x] 2FA simple bypass
-
-## SSRF — labs Apprentice
-
-- [ ] Basic SSRF against the local server
-- [ ] Basic SSRF against another back-end system
+- [ ] Remote code execution via web shell upload
+- [ ] Web shell upload via Content-Type restriction bypass
 
 ## Convención
 
@@ -34,8 +29,7 @@
 ## Registro de estudio
 
 ```text
-2026-08-17 | Access Control | — | bloque Apprentice completado | pasar a Authentication
-2026-08-17 | Authentication | — | 2 labs Apprentice completados | pasar a SSRF
+2026-08-25 | SSRF | — | 2 labs Apprentice completados | pasar a File Upload Vulnerabilities
 ```
 
 Añadir una línea por sesión:
