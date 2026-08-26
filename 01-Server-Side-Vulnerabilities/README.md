@@ -7,40 +7,41 @@ Primer bloque de estudio orientado a fundamentos de vulnerabilidades del lado se
 1. [Path Traversal](01-Path-Traversal.md) — completado ✅
 2. [Access Control](02-Access-Control.md) — completado ✅
 3. [Authentication](03-Authentication.md) — completado ✅
-4. [Server-side request forgery (SSRF)](04-SSRF.md) — en estudio 🟡
-5. File Upload Vulnerabilities
+4. [Server-side request forgery (SSRF)](04-SSRF.md) — completado ✅
+5. [File Upload Vulnerabilities](05-File-Upload-Vulnerabilities.md) — en estudio 🟡
 6. OS Command Injection
 7. SQL Injection
 
-## SSRF — siguiente paso
+## File Upload — siguiente paso
 
-PortSwigger incluye actualmente 6 elementos en el bloque SSRF de este learning path y **2 labs Apprentice**:
+PortSwigger incluye actualmente 9 elementos en este bloque del learning path y **2 labs Apprentice**:
 
-1. **Basic SSRF against the local server** — siguiente lab.
-2. **Basic SSRF against another back-end system**.
+1. **Remote code execution via web shell upload** — siguiente lab.
+2. **Web shell upload via Content-Type restriction bypass**.
 
 Procedimientos preparados:
 
-- [Lab 1 — Basic SSRF against the local server](../Labs/SSRF/01-Basic-SSRF-against-local-server.md)
-- [Lab 2 — Basic SSRF against another back-end system](../Labs/SSRF/02-Basic-SSRF-against-backend-system.md)
+- [Lab 1 — Remote code execution via web shell upload](../Labs/File-Upload/01-RCE-via-web-shell-upload.md)
+- [Lab 2 — Web shell upload via Content-Type restriction bypass](../Labs/File-Upload/02-Web-shell-via-Content-Type-bypass.md)
 
 Referencia básica añadida:
 
-- [SSRF: loopback, localhost y redes internas](../Conceptos-Basicos-Clave/10-SSRF-Loopback-y-Redes-Internas.md)
+- [Multipart/form-data y File Upload](../Conceptos-Basicos-Clave/11-Multipart-Form-Data-y-File-Upload.md)
 
 ## Burp que se practicará
 
 En este bloque reforzaremos:
 
 ```text
-Proxy → Intercept
+Proxy → HTTP history
+filtrar/ver requests de imágenes
+identificar GET /files/avatars/...
 Send to Repeater
-modificar stockApi
-leer HTML en Responses
-Send to Intruder
-Payload type: Numbers
-ordenar por Status code
-Intruder → Repeater
+leer multipart/form-data
+identificar filename=
+identificar Content-Type de una parte
+modificar MIME en Repeater
+leer ejecución PHP en Response
 ```
 
 ## Objetivo del bloque
