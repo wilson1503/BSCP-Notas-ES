@@ -82,10 +82,10 @@ Ya existe una sección separada que se irá refinando mientras avanzamos. Recopi
 ### 01 — Server-side vulnerabilities (Apprentice)
 
 - [x] [Path Traversal](01-Server-Side-Vulnerabilities/01-Path-Traversal.md) — completado
-- [x] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — bloque Apprentice completado
-- [x] [Authentication](01-Server-Side-Vulnerabilities/03-Authentication.md) — bloque Apprentice completado
-- [ ] [Server-side request forgery (SSRF)](01-Server-Side-Vulnerabilities/04-SSRF.md) — **en progreso**
-- [ ] File Upload Vulnerabilities
+- [x] [Access Control](01-Server-Side-Vulnerabilities/02-Access-Control.md) — completado
+- [x] [Authentication](01-Server-Side-Vulnerabilities/03-Authentication.md) — completado
+- [x] [Server-side request forgery (SSRF)](01-Server-Side-Vulnerabilities/04-SSRF.md) — completado
+- [ ] [File Upload Vulnerabilities](01-Server-Side-Vulnerabilities/05-File-Upload-Vulnerabilities.md) — **en progreso**
 - [ ] OS Command Injection
 - [ ] SQL Injection
 
@@ -93,21 +93,21 @@ Ya existe una sección separada que se irá refinando mientras avanzamos. Recopi
 
 ## Lab actual
 
-SSRF — primer laboratorio Apprentice:
+File Upload — primer laboratorio Apprentice:
 
-➡️ [Basic SSRF against the local server](Labs/SSRF/01-Basic-SSRF-against-local-server.md)
+➡️ [Remote code execution via web shell upload](Labs/File-Upload/01-RCE-via-web-shell-upload.md)
 
 Después:
 
-➡️ [Basic SSRF against another back-end system](Labs/SSRF/02-Basic-SSRF-against-backend-system.md)
+➡️ [Web shell upload via Content-Type restriction bypass](Labs/File-Upload/02-Web-shell-via-Content-Type-bypass.md)
 
 ## Conceptos básicos clave
 
 ➡️ [Abrir Conceptos Básicos Clave](Conceptos-Basicos-Clave/README.md)
 
-Para SSRF se añadió específicamente:
+Para File Upload se añadió específicamente:
 
-➡️ [SSRF: loopback, localhost y redes internas](Conceptos-Basicos-Clave/10-SSRF-Loopback-y-Redes-Internas.md)
+➡️ [Multipart/form-data y File Upload](Conceptos-Basicos-Clave/11-Multipart-Form-Data-y-File-Upload.md)
 
 ## Estructura
 
