@@ -2,6 +2,17 @@
 
 > **Método de estudio:** seguir primero el orden, conceptos y workflows oficiales de PortSwigger Web Security Academy. Los bypasses avanzados y atajos de examen quedan separados en `Preparacion-Examen/`.
 
+## Estado del bloque
+
+**✅ SSRF — Apprentice completado.**
+
+Labs realizados:
+
+- ✅ Basic SSRF against the local server.
+- ✅ Basic SSRF against another back-end system.
+
+---
+
 ## Qué es SSRF
 
 **Server-side request forgery (SSRF)** es una vulnerabilidad que permite hacer que la aplicación del lado servidor envíe una petición a una ubicación que el usuario no debería poder alcanzar directamente.
@@ -29,7 +40,7 @@ Esto puede permitir acceder a:
 
 # Orden oficial en Server-side vulnerabilities — Apprentice
 
-PortSwigger incluye actualmente 6 elementos en el bloque SSRF de este learning path:
+PortSwigger incluye 6 elementos en el bloque SSRF:
 
 1. What is SSRF?
 2. SSRF attacks against the server
@@ -37,8 +48,6 @@ PortSwigger incluye actualmente 6 elementos en el bloque SSRF de este learning p
 4. **Lab: Basic SSRF against the local server**
 5. SSRF attacks against other back-end systems
 6. **Lab: Basic SSRF against another back-end system**
-
-En este bloque Apprentice haremos **2 labs**.
 
 ---
 
@@ -69,48 +78,41 @@ localhost
 
 Esto se denomina **loopback**.
 
-Una función puede estar bloqueada para clientes externos pero permitida cuando la petición procede de la propia máquina. SSRF puede abusar de esa diferencia de confianza.
-
 ---
 
-# Lab 1 — Basic SSRF against the local server ⏳
+# Lab 1 — Basic SSRF against the local server ✅
 
 > [Procedimiento completo paso a paso](../Labs/SSRF/01-Basic-SSRF-against-local-server.md)
 
-## Objetivo
-
-Usar la función **Check stock** para hacer que el servidor acceda a:
+## Workflow aprendido
 
 ```text
-http://localhost/admin
-```
-
-y luego eliminar a `carlos`.
-
-## Flujo que debemos entender
-
-```text
-Browser
-  ↓
+Browser → /admin
+        ↓
+bloqueado externamente
+        ↓
+Check stock
+        ↓
 POST /product/stock
-stockApi=URL
-  ↓
-Servidor vulnerable
-  ↓
-GET URL indicada en stockApi
+        ↓
+stockApi=http://localhost/admin
+        ↓
+servidor hace GET local
+        ↓
+HTML admin aparece en Repeater Response
+        ↓
+stockApi=http://localhost/admin/delete?username=carlos
 ```
 
-Cambiando la URL:
+## Lección importante
+
+Cuando PortSwigger indica que el panel se “display”, en este workflow el HTML se observa en:
 
 ```text
-stockApi legítimo
-        ↓
-http://localhost/admin
-        ↓
-servidor consulta su propio panel admin
+Burp Repeater → Response
 ```
 
-La herramienta principal será **Burp Repeater**.
+No necesariamente como navegación directa en el browser.
 
 ---
 
@@ -118,59 +120,48 @@ La herramienta principal será **Burp Repeater**.
 
 La aplicación vulnerable puede tener conectividad con otros hosts de una red privada que nosotros no podemos alcanzar directamente.
 
-Ejemplo conceptual:
-
 ```text
 Internet
    X
-192.168.0.42:8080/admin
+192.168.0.X:8080/admin
    ↑
 servidor vulnerable sí tiene acceso
 ```
 
-Si controlamos el destino de una petición server-side, podemos intentar distintos hosts internos hasta localizar uno que responda de forma diferente.
-
 ---
 
-# Lab 2 — Basic SSRF against another back-end system
+# Lab 2 — Basic SSRF against another back-end system ✅
 
 > [Procedimiento completo paso a paso](../Labs/SSRF/02-Basic-SSRF-against-backend-system.md)
 
-## Objetivo
-
-Escanear mediante `stockApi` el rango:
+## Workflow aprendido
 
 ```text
-192.168.0.X:8080
-```
-
-para localizar un panel `/admin` y eliminar a `carlos`.
-
-## Técnica Burp que enseña
-
-Este lab combina:
-
-```text
-Proxy / HTTP history
+POST /product/stock
         ↓
 Send to Intruder
         ↓
-Numbers 1 → 255
+stockApi=http://192.168.0.§X§:8080/admin
         ↓
-identificar respuesta HTTP 200
+Payload type: Numbers
+1 → 255
+        ↓
+identificar Status 200
+        ↓
+IP interna válida
         ↓
 Send to Repeater
         ↓
-eliminar carlos
+/admin/delete?username=carlos
 ```
 
-Aquí **Intruder** ya no se usa para usernames/passwords, sino para variar sistemáticamente un número dentro de una IP.
+Aquí **Intruder** se utilizó para variar sistemáticamente el último octeto de una IP, no para passwords.
 
 ---
 
 # Qué buscar como superficie SSRF
 
-En este bloque debemos acostumbrarnos a detectar parámetros que representen destinos de red o URLs, por ejemplo:
+Parámetros que representan destinos o URLs pueden ser interesantes, por ejemplo:
 
 ```text
 url=
@@ -182,35 +173,7 @@ callback=
 webhook=
 ```
 
-No significa que todos sean vulnerables. La señal importante es que **el servidor parece realizar una petición usando el valor enviado por el cliente**.
-
----
-
-# Qué mirar en Burp
-
-Cuando usemos una función como **Check stock**:
-
-1. localizar la request en `Proxy → HTTP history` o interceptarla;
-2. buscar en el body/query un valor que parezca URL;
-3. identificar qué respuesta devuelve la aplicación cuando cambia ese destino;
-4. enviar la request a la herramienta indicada por el lab:
-   - Repeater para probar un destino concreto;
-   - Intruder para recorrer un conjunto de hosts/valores.
-
-Ejemplo conceptual:
-
-```http
-POST /product/stock HTTP/2
-Content-Type: application/x-www-form-urlencoded
-
-stockApi=http://stock.example/product/1
-```
-
-El punto controlable es:
-
-```text
-stockApi=
-```
+La señal importante es que **el servidor parece realizar una petición usando el valor enviado por el cliente**.
 
 ---
 
@@ -227,14 +190,14 @@ stockApi=
         ↓
 ¿puedo apuntar a sistemas internos?
         ↓
-¿la respuesta me permite confirmar qué alcanzó el servidor?
+¿la respuesta confirma qué alcanzó el servidor?
 ```
 
 ---
 
-# Qué NO mezclaremos todavía
+# Qué NO mezclamos todavía
 
-El learning path completo de SSRF contiene temas más avanzados como:
+Temas más avanzados del learning path completo:
 
 - blacklist filters;
 - whitelist filters;
@@ -244,55 +207,37 @@ El learning path completo de SSRF contiene temas más avanzados como:
 - SSRF mediante `Referer`;
 - bypasses de validación de URL.
 
-Los estudiaremos cuando PortSwigger los introduzca. No los usaremos para sustituir el workflow básico de estos dos labs Apprentice.
+Se estudiarán cuando PortSwigger los introduzca.
 
 ---
 
-# Burp que debemos aprender en SSRF
+# Burp aprendido en SSRF
 
-- [ ] Interceptar `Check stock`.
-- [ ] Identificar `stockApi` en el body.
-- [ ] `Send to Repeater`.
-- [ ] Cambiar solo una URL en Repeater.
-- [ ] Leer HTML devuelto dentro de la response del stock check.
-- [ ] `Send to Intruder`.
-- [ ] Marcar solo el último octeto de una IP con `§`.
-- [ ] Usar payload type **Numbers**.
-- [ ] Configurar `From=1`, `To=255`, `Step=1`.
-- [ ] Ordenar resultados por `Status code`.
-- [ ] Enviar un resultado concreto de Intruder a Repeater.
+- [x] Interceptar/localizar `Check stock`.
+- [x] Identificar `stockApi` en el body.
+- [x] `Send to Repeater`.
+- [x] Cambiar una URL en Repeater.
+- [x] Leer HTML devuelto en la Response.
+- [x] `Send to Intruder`.
+- [x] Marcar el último octeto con `§`.
+- [x] Usar payload type **Numbers**.
+- [x] Configurar `1 → 255`.
+- [x] Ordenar/buscar por `Status code`.
+- [x] Pasar un resultado de Intruder a Repeater.
 
 ---
 
 # Checklist Apprentice
 
-- [ ] Puedo explicar SSRF con mis palabras.
-- [ ] Entiendo la diferencia entre una petición del navegador y una petición server-side.
-- [ ] Sé qué son `localhost` y `127.0.0.1`.
-- [ ] Entiendo por qué un servicio interno puede confiar más en peticiones locales.
-- [ ] Sé identificar un parámetro URL como `stockApi`.
-- [ ] Sé usar Repeater para cambiar el destino.
-- [ ] Sé usar Intruder Numbers para variar una IP interna.
-- [ ] Lab 1 completado.
-- [ ] Lab 2 completado.
-
----
-
-# Registro de labs
-
-## Lab 1 — Basic SSRF against the local server
-
-- Estado: ⏳ siguiente lab.
-- Herramienta principal: **Repeater**.
-- Parámetro: `stockApi`.
-- Destino clave: `http://localhost/admin`.
-
-## Lab 2 — Basic SSRF against another back-end system
-
-- Estado: ⬜ pendiente.
-- Herramientas: **Intruder + Repeater**.
-- Red a recorrer: `192.168.0.X`.
-- Puerto: `8080`.
+- [x] Puedo explicar SSRF con mis palabras.
+- [x] Entiendo navegador vs petición server-side.
+- [x] Sé qué son `localhost` y loopback.
+- [x] Entiendo por qué un servicio interno puede confiar en peticiones locales.
+- [x] Sé identificar `stockApi`.
+- [x] Sé usar Repeater para cambiar destino.
+- [x] Sé usar Intruder Numbers para recorrer una IP interna.
+- [x] Lab 1 completado.
+- [x] Lab 2 completado.
 
 ---
 
