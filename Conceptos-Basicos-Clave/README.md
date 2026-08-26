@@ -25,6 +25,7 @@ Esta carpeta reúne conceptos que aparecen una y otra vez en Web Security Academ
 10. [SSRF: loopback, localhost y redes internas](10-SSRF-Loopback-y-Redes-Internas.md)
 11. [Multipart/form-data y File Upload](11-Multipart-Form-Data-y-File-Upload.md)
 12. [OS Command Injection y separadores del shell](12-OS-Command-Injection-y-Shell-Separators.md)
+13. [SQL básico para entender SQL Injection](13-SQL-Basico-para-SQL-Injection.md)
 
 ## Qué deberías ser capaz de hacer
 
@@ -48,6 +49,8 @@ Después de leer esta sección deberías poder mirar una request HTTP y responde
 - ¿Sé localizar `filename=` y el contenido de un archivo en una request de upload?
 - ¿Puedo reconocer cuándo un parámetro HTTP podría terminar siendo usado dentro de un comando del sistema operativo?
 - ¿Entiendo por qué caracteres como `|`, `&` o `;` tienen significado especial para un shell?
+- ¿Entiendo `SELECT`, `WHERE`, `AND`, `OR`, strings entre comillas y comentarios `--` a nivel suficiente para los primeros labs SQLi?
+- ¿Puedo explicar por qué `' OR 1=1--` cambia la lógica de una consulta vulnerable?
 
 ## Regla mental
 
