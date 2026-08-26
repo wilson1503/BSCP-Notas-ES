@@ -26,6 +26,7 @@ Esta carpeta reúne conceptos que aparecen una y otra vez en Web Security Academ
 11. [Multipart/form-data y File Upload](11-Multipart-Form-Data-y-File-Upload.md)
 12. [OS Command Injection y separadores del shell](12-OS-Command-Injection-y-Shell-Separators.md)
 13. [SQL básico para entender SQL Injection](13-SQL-Basico-para-SQL-Injection.md)
+14. [SQL UNION, NULL y tipos de datos](14-SQL-UNION-NULL-y-Tipos-de-Datos.md)
 
 ## Qué deberías ser capaz de hacer
 
@@ -49,8 +50,10 @@ Después de leer esta sección deberías poder mirar una request HTTP y responde
 - ¿Sé localizar `filename=` y el contenido de un archivo en una request de upload?
 - ¿Puedo reconocer cuándo un parámetro HTTP podría terminar siendo usado dentro de un comando del sistema operativo?
 - ¿Entiendo por qué caracteres como `|`, `&` o `;` tienen significado especial para un shell?
-- ¿Entiendo `SELECT`, `WHERE`, `AND`, `OR`, strings entre comillas y comentarios `--` a nivel suficiente para los primeros labs SQLi?
+- ¿Entiendo `SELECT`, `WHERE`, `AND`, `OR`, strings entre comillas y comentarios `--` a nivel suficiente para SQLi?
 - ¿Puedo explicar por qué `' OR 1=1--` cambia la lógica de una consulta vulnerable?
+- ¿Entiendo por qué un `UNION SELECT` necesita el mismo número de columnas que la consulta original?
+- ¿Sé por qué se usa `NULL` para descubrir columnas y cómo probar qué posición admite texto?
 
 ## Regla mental
 
